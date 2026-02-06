@@ -63,7 +63,7 @@ GEMINI_API_KEY=your_actual_api_key_here
 
 **🎉 Free Tier Info:**
 - ✅ **Úplne ZADARMO** - žiadna kreditná karta potrebná
-- ✅ **Gemini 1.5 Flash** - 10 requestov/minútu, 250/deň
+- ✅ **Gemini 2.5 Flash** - 5 RPM, 20 RPD, 250k TPM
 - ✅ **Dostatočné pre testovanie a učenie**
 - 💡 Pre produkciu môžete neskôr upgradovať na platený tier
 
@@ -218,38 +218,7 @@ Matematická kalkulačka s podporou operácií:
 - `.env` súbor je v `.gitignore` - nikdy necommitujte API kľúče!
 - Používajte `.env.example` ako šablónu
 
-## 📝 Poznámky
-
-- Agent používa Gemini 1.5 Flash model pre rýchle odpovede
-- Tool-calling je vypnutý automatický režim pre lepšiu kontrolu
-- Každý krok procesu je vypisovaný na konzolu pre lepšie pochopenie
-
-## 🎓 Vzdelávacie ciele
-
-Tento projekt demonštruje:
-✅ Integráciu s LLM API  
-✅ Definíciu a registráciu nástrojov (tools)  
-✅ Tool-calling mechanizmus  
-✅ Spracovanie function calls  
-✅ Multi-turn konverzáciu s LLM  
-
-## 📄 Licencia
-
-Tento projekt je vytvorený pre vzdelávacie účely.
-
 ## 👨‍💻 Autor
 
-Vytvorené pre praktické cvičenie AI Agenti - Lekcia 1
+Michal Pecho
 
----
-
-## ❓ Časté otázky (FAQ)
-
-**Máte otázky?** Pozrite si **[FAQ.md](FAQ.md)** s odpoveďami na:
-- 💰 Je Gemini API zadarmo? (ÁNO!)
-- 🔧 Ako riešiť bežné chyby?
-- 🤖 Ako použiť Ollama offline?
-- 📝 Ako sa projekt hodnotí?
-- 🐙 Ako pracovať s Githubom?
-
-**Držím palce! 🍀**
