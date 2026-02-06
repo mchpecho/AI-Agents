@@ -17,38 +17,38 @@ if ! command -v python3 &> /dev/null; then
 fi
 
 PYTHON_VERSION=$(python3 --version)
-echo "Najdeny: $PYTHON_VERSION"
+echo "[OK] Najdeny: $PYTHON_VERSION"
 echo ""
 
 # Vytvorenie virtualneho prostredia
 echo "Vytvaram virtualne prostredie..."
 python3 -m venv .venv
-echo "Virtualne prostredie vytvorene"
+echo "[OK] Virtualne prostredie vytvorene"
 echo ""
 
 # Aktivacia virtualneho prostredia
 echo "Aktivujem virtualne prostredie..."
 source .venv/bin/activate
-echo "Virtualne prostredie aktivovane"
+echo "[OK] Virtualne prostredie aktivovane"
 echo ""
 
 # Instalacia zavislosti
 echo "Instalujem zavislosti..."
 pip install --upgrade pip -q
 pip install -r requirements.txt -q
-echo "Zavislosti nainstalovane"
+echo "[OK] Zavislosti nainstalovane"
 echo ""
 
 # Vytvorenie .env suboru ak neexistuje
 if [ ! -f .env ]; then
     echo "Vytvaram .env subor..."
     cp .env.example .env
-    echo ".env subor vytvoreny"
+    echo "[OK] .env subor vytvoreny"
     echo ""
     echo "DOLEZITE: Upravte .env subor a doplnte vas GEMINI_API_KEY"
     echo "Ziskajte API kluc na: https://aistudio.google.com/app/apikey"
 else
-    echo ".env subor uz existuje"
+    echo "[ERROR] .env subor uz existuje"
 fi
 echo ""
 
