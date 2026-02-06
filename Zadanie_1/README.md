@@ -120,6 +120,7 @@ Finálna odpoveď
 ├── agent.py              # ⭐ Základný AI agent (hlavné zadanie)
 ├── agent_advanced.py     # 🚀 Rozšírená verzia s viacerými nástrojmi
 ├── agent_ollama.py       # 🦙 Alternatíva s lokálnym LLM (Ollama)
+├── list_models.py       # 🤖 Zoznam dostupných gemini modelov pre api
 ├── requirements.txt      # Python závislosti
 ├── .env.example         # Šablóna pre environment premenné
 ├── .env                 # Vaše API kľúče (nie v gite!)
