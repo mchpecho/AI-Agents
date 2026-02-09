@@ -103,4 +103,11 @@ Finálna odpoveď
 ├── .gitignore           # Git ignore súbor
 └── README.md            # Tento súbor
 ```
+## ▶️ Použitie
+
+### Jednoduchý výpočet:
+<img width="670" height="457" alt="image" src="https://github.com/user-attachments/assets/f5a61314-290f-4e52-9e11-174c5c4f4849" />
+
+### Komplexný výpočet
+<img width="677" height="721" alt="image" src="https://github.com/user-attachments/assets/6ba2f2a1-0ce1-4276-ae1f-bea9a3c8ae82" />
 
