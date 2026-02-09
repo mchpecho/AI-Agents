@@ -87,37 +87,13 @@ Používateľ
 Finálna odpoveď
 ```
 
-### Proces:
-
-1. **Používateľ zadá otázku**: Napríklad "Koľko je 25 krát 4?"
-
-2. **Agent zavolá LLM**: Pošle otázku Gemini API s definíciou dostupných nástrojov
-
-3. **LLM analyzuje a požiada o nástroj**: 
-   ```json
-   {
-     "function_name": "calculate",
-     "arguments": {
-       "operation": "multiply",
-       "a": 25,
-       "b": 4
-     }
-   }
-   ```
-
-4. **Agent vykoná nástroj**: Zavolá funkciu `calculate("multiply", 25, 4)`
-
-5. **Nástroj vráti výsledok**: `100`
-
-6. **Agent pošle výsledok späť LLM**: LLM dostane výsledok výpočtu
-
-7. **LLM vygeneruje finálnu odpoveď**: "Výsledok je 100."
 
 ## 📁 Štruktúra projektu
 
 ```
 .
 ├── agent.py              # ⭐ Základný AI agent (hlavné zadanie)
+├── agent_react.py              # ⭐ Základný AI agent ReAct (hlavné zadanie)
 ├── agent_advanced.py     # 🚀 Rozšírená verzia s viacerými nástrojmi
 ├── agent_ollama.py       # 🦙 Alternatíva s lokálnym LLM (Ollama)
 ├── list_models.py       # 🤖 Zoznam dostupných gemini modelov pre api
@@ -127,99 +103,4 @@ Finálna odpoveď
 ├── .gitignore           # Git ignore súbor
 └── README.md            # Tento súbor
 ```
-
-## 📝 Verzie skriptov
-
-### `agent.py` - Základná verzia ⭐
-Spĺňa zadanie cvičenia. Jednoduchý agent s jedným nástrojom `calculate`.
-
-**Spustenie:**
-```bash
-python agent.py
-```
-
-### `agent_advanced.py` - Pokročilá verzia 🚀
-Rozšírený agent s viacerými nástrojmi:
-- `calculate` - matematické operácie
-- `get_current_time` - aktuálny čas
-- `roll_dice` - hádzanie kockami
-- `get_weather` - predpoveď počasia (simulovaná)
-
-**Spustenie:**
-```bash
-python agent_advanced.py
-```
-
-### `agent_ollama.py` - Lokálny LLM 🦙
-Alternatívne riešenie s Ollama (open-source lokálny LLM).
-
-**Prerekvizity:**
-1. Nainštalujte Ollama: https://ollama.ai
-2. Stiahnite model: `ollama pull llama3.2`
-3. Spustite server: `ollama serve`
-
-**Spustenie:**
-```bash
-python agent_ollama.py
-```
-
-## 🧪 Príklady použitia
-
-### Jednoduchý výpočet
-```
-👤 Používateľ: Koľko je 25 krát 4?
-
-🤖 LLM požaduje nástroj: calculate
-   Argumenty: {
-     "operation": "multiply",
-     "a": 25,
-     "b": 4
-   }
-
-🔧 Nástroj vykonaný: multiply(25, 4) = 100
-
-💬 Finálna odpoveď: 25 krát 4 je 100.
-```
-
-### Zložitejší výpočet
-```
-👤 Používateľ: Vypočítaj (150 + 50) deleno 4
-
-[LLM môže požiadať o viacero tool calls]
-1. calculate(add, 150, 50) = 200
-2. calculate(divide, 200, 4) = 50
-
-💬 Finálna odpoveď: (150 + 50) deleno 4 je 50.
-```
-
-## 🛠️ Nástroje
-
-### `calculate`
-Matematická kalkulačka s podporou operácií:
-- `add` - sčítanie
-- `subtract` - odčítanie  
-- `multiply` - násobenie
-- `divide` - delenie
-
-**Parametre:**
-- `operation` (string): Typ operácie
-- `a` (float): Prvé číslo
-- `b` (float): Druhé číslo
-
-**Návratová hodnota:** Výsledok výpočtu (float)
-
-## 📚 Použité technológie
-
-- **Python 3.8+**
-- **Google Gemini API** - LLM pre tool-calling
-- **python-dotenv** - Správa environment premenných
-
-## 🔐 Bezpečnosť
-
-- `.env` súbor je v `.gitignore` - nikdy necommitujte API kľúče!
-- Používajte `.env.example` ako šablónu
-
-## 👨‍💻 Autor
-
-Michal Pecho
 
