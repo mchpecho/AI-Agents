@@ -1,248 +1,180 @@
 """
-Rozšírený AI Agent s viacerými nástrojmi
+Rozšírený AI Agent s viacerými nástrojmi (viac RPM - potrebné platené API)
 Demonštruje pokročilé použitie tool-callingu
 """
 
 import os
-import json
 import random
 from datetime import datetime
 from dotenv import load_dotenv
 from google import genai
+from google.genai import types
 
 load_dotenv()
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
+API_KEY = os.getenv("GEMINI_API_KEY")
+if not API_KEY:
+    raise SystemExit("❌ Chýba GEMINI_API_KEY v .env súbore")
 
-# ===== NÁSTROJE =====
+MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+
+client = genai.Client(api_key=API_KEY)
+
+# ============================================================
+# NÁSTROJE
+# ============================================================
 
 def calculate(operation: str, a: float, b: float) -> float:
-    """Matematické operácie"""
-    operations = {
+    ops = {
         "add": lambda x, y: x + y,
         "subtract": lambda x, y: x - y,
         "multiply": lambda x, y: x * y,
-        "divide": lambda x, y: x / y if y != 0 else "Chyba: delenie nulou"
+        "divide": lambda x, y: x / y,
     }
-    result = operations.get(operation, lambda x, y: "Neznáma operácia")(a, b)
+    if operation not in ops:
+        raise ValueError(f"Neznáma operácia: {operation}")
+    if operation == "divide" and b == 0:
+        raise ZeroDivisionError("Delenie nulou")
+    result = ops[operation](a, b)
     print(f"🔧 calculate({operation}, {a}, {b}) = {result}")
     return result
 
-
 def get_current_time(timezone: str = "UTC") -> str:
-    """Vráti aktuálny čas"""
-    current_time = datetime.now().strftime("%H:%M:%S")
-    current_date = datetime.now().strftime("%Y-%m-%d")
-    result = f"{current_date} {current_time} ({timezone})"
+    # Pozn.: timezone tu len “echo-ujeme”, pre demo stačí.
+    now = datetime.now()
+    result = f"{now:%Y-%m-%d %H:%M:%S} ({timezone})"
     print(f"🔧 get_current_time({timezone}) = {result}")
     return result
 
-
 def roll_dice(num_dice: int = 1, num_sides: int = 6) -> dict:
-    """Hodí kockami"""
+    if num_dice < 1 or num_sides < 2:
+        raise ValueError("num_dice >= 1, num_sides >= 2")
     rolls = [random.randint(1, num_sides) for _ in range(num_dice)]
     total = sum(rolls)
     result = {"rolls": rolls, "total": total}
-    print(f"🔧 roll_dice({num_dice}d{num_sides}) = {rolls} (suma: {total})")
+    print(f"🔧 roll_dice({num_dice}d{num_sides}) = {result}")
     return result
 
-
-def get_weather(city: str) -> dict:
-    """Simulovaná predpoveď počasia"""
-    # V reálnej aplikácii by sa volalo Weather API
-    weather_conditions = ["slnečno", "zamračené", "dážď", "sneh", "hmla"]
-    result = {
-        "city": city,
-        "temperature": random.randint(-5, 30),
-        "condition": random.choice(weather_conditions),
-        "humidity": random.randint(30, 90)
-    }
-    print(f"🔧 get_weather({city}) = {result}")
-    return result
-
-
-# ===== DEFINÍCIE NÁSTROJOV PRE GEMINI =====
-
-tools = genai.protos.Tool(
-    function_declarations=[
-        genai.protos.FunctionDeclaration(
-            name="calculate",
-            description="Vykonáva matematické operácie",
-            parameters=genai.protos.Schema(
-                type=genai.protos.Type.OBJECT,
-                properties={
-                    "operation": genai.protos.Schema(
-                        type=genai.protos.Type.STRING,
-                        enum=["add", "subtract", "multiply", "divide"]
-                    ),
-                    "a": genai.protos.Schema(type=genai.protos.Type.NUMBER),
-                    "b": genai.protos.Schema(type=genai.protos.Type.NUMBER)
-                },
-                required=["operation", "a", "b"]
-            )
-        ),
-        genai.protos.FunctionDeclaration(
-            name="get_current_time",
-            description="Vráti aktuálny dátum a čas",
-            parameters=genai.protos.Schema(
-                type=genai.protos.Type.OBJECT,
-                properties={
-                    "timezone": genai.protos.Schema(
-                        type=genai.protos.Type.STRING,
-                        description="Časové pásmo (default: UTC)"
-                    )
-                }
-            )
-        ),
-        genai.protos.FunctionDeclaration(
-            name="roll_dice",
-            description="Hodí kockami a vráti výsledky",
-            parameters=genai.protos.Schema(
-                type=genai.protos.Type.OBJECT,
-                properties={
-                    "num_dice": genai.protos.Schema(
-                        type=genai.protos.Type.INTEGER,
-                        description="Počet kociek (default: 1)"
-                    ),
-                    "num_sides": genai.protos.Schema(
-                        type=genai.protos.Type.INTEGER,
-                        description="Počet strán kocky (default: 6)"
-                    )
-                }
-            )
-        ),
-        genai.protos.FunctionDeclaration(
-            name="get_weather",
-            description="Získa informácie o počasí pre dané mesto",
-            parameters=genai.protos.Schema(
-                type=genai.protos.Type.OBJECT,
-                properties={
-                    "city": genai.protos.Schema(
-                        type=genai.protos.Type.STRING,
-                        description="Názov mesta"
-                    )
-                },
-                required=["city"]
-            )
-        )
-    ]
-)
-
-
-# Mapovanie názvov funkcií na reálne funkcie
 AVAILABLE_FUNCTIONS = {
     "calculate": calculate,
     "get_current_time": get_current_time,
     "roll_dice": roll_dice,
-    "get_weather": get_weather
 }
 
+# ===== DEFINÍCIE NÁSTROJOV PRE GEMINI (types.*) =====
 
-def run_advanced_agent(user_prompt: str):
-    """Pokročilý AI agent s viacerými nástrojmi"""
-    print(f"\n{'='*70}")
-    print(f"🤖 POKROČILÝ AI AGENT - Multi-Tool Demo")
-    print(f"{'='*70}")
-    print(f"\n👤 Používateľ: {user_prompt}\n")
-    
-    model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",
-        tools=[tools]
+tools = types.Tool(
+    function_declarations=[
+        types.FunctionDeclaration(
+            name="calculate",
+            description="Základné matematické operácie nad dvoma číslami.",
+            parameters_json_schema={
+                "type": "object",
+                "properties": {
+                    "operation": {"type": "string", "enum": ["add", "subtract", "multiply", "divide"]},
+                    "a": {"type": "number"},
+                    "b": {"type": "number"},
+                },
+                "required": ["operation", "a", "b"],
+            },
+        ),
+        types.FunctionDeclaration(
+            name="get_current_time",
+            description="Vráti aktuálny dátum a čas.",
+            parameters_json_schema={
+                "type": "object",
+                "properties": {
+                    "timezone": {"type": "string", "description": "Časové pásmo (default: UTC)"},
+                },
+            },
+        ),
+        types.FunctionDeclaration(
+            name="roll_dice",
+            description="Hodí kockami a vráti hody aj súčet.",
+            parameters_json_schema={
+                "type": "object",
+                "properties": {
+                    "num_dice": {"type": "integer", "description": "Počet kociek (default: 1)"},
+                    "num_sides": {"type": "integer", "description": "Počet strán (default: 6)"},
+                },
+            },
+        ),
+    ]
+)
+
+cfg = types.GenerateContentConfig(tools=[tools], temperature=0.0)
+
+
+def run_advanced_agent(user_prompt: str) -> None:
+    prompt = (
+        "Používaj nástroje keď to pomôže. "
+        "Pri viac-krokových úlohách volaj nástroje opakovane. "
+        f"Otázka: {user_prompt}"
     )
-    
-    chat = model.start_chat(enable_automatic_function_calling=False)
-    
-    print("📡 Volám LLM API...\n")
-    response = chat.send_message(user_prompt)
-    
-    iteration = 0
-    max_iterations = 10  # Ochrana pred nekonečnou slučkou
-    
-    while iteration < max_iterations:
-        iteration += 1
-        
-        if not response.candidates[0].content.parts:
-            break
-            
-        part = response.candidates[0].content.parts[0]
-        
-        # Tool call
-        if hasattr(part, 'function_call') and part.function_call:
-            function_call = part.function_call
-            function_name = function_call.name
-            function_args = dict(function_call.args)
-            
-            print(f"🤖 LLM požaduje nástroj #{iteration}: {function_name}")
-            print(f"   Argumenty: {json.dumps(function_args, indent=2, ensure_ascii=False)}\n")
-            
-            # Vykonanie nástroja
-            if function_name in AVAILABLE_FUNCTIONS:
-                try:
-                    result = AVAILABLE_FUNCTIONS[function_name](**function_args)
-                except Exception as e:
-                    result = f"Chyba: {str(e)}"
-            else:
-                result = f"Chyba: neznámy nástroj '{function_name}'"
-            
-            print(f"\n📤 Posielam výsledok späť LLM\n")
-            
-            # Vytvorenie function response
-            function_response = genai.protos.Part(
-                function_response=genai.protos.FunctionResponse(
-                    name=function_name,
-                    response={"result": result}
-                )
-            )
-            
-            # Ďalšie volanie LLM
-            print("📡 Volám LLM API s výsledkom...\n")
-            response = chat.send_message(function_response)
-        
-        # Textová odpoveď
-        elif hasattr(part, 'text') and part.text:
-            print(f"💬 Finálna odpoveď LLM:")
-            print(f"{'='*70}")
-            print(f"{part.text}")
-            print(f"{'='*70}\n")
-            break
-        
-        else:
-            break
-    
-    if iteration >= max_iterations:
-        print("⚠️  Dosiahnutý maximálny počet iterácií")
 
+    history = [types.Content(role="user", parts=[types.Part.from_text(text=prompt)])]
+
+    for _ in range(10):
+        resp = client.models.generate_content(model=MODEL, contents=history, config=cfg)
+
+        if not resp.candidates:
+            print(resp.text or "")
+            return
+
+        content = resp.candidates[0].content
+        parts = content.parts or []
+        history.append(content)
+
+        # nájdi function_call (ak existuje)
+        fc_part = next((p for p in parts if getattr(p, "function_call", None)), None)
+        if fc_part:
+            fc = fc_part.function_call
+            name = fc.name
+            args = dict(fc.args or {})
+
+            print(f"🤖 Tool call: {name} args={args}")
+
+            fn = AVAILABLE_FUNCTIONS.get(name)
+            if not fn:
+                tool_payload = {"error": f"Neznámy nástroj: {name}"}
+            else:
+                try:
+                    result = fn(**args)
+                    tool_payload = {"result": result}
+                except Exception as e:
+                    tool_payload = {"error": str(e)}
+
+            tool_part = types.Part.from_function_response(name=name, response=tool_payload)
+            history.append(types.Content(role="tool", parts=[tool_part]))
+            continue
+
+        # inak je to text
+        text = resp.text
+        if text:
+            print(text)
+        else:
+            # fallback: vypíš čo sa dá
+            for p in parts:
+                if getattr(p, "text", None):
+                    print(p.text)
+        return
+
+    print("⚠️ Dosiahnutý max počet iterácií.")
+
+# ============================================================
+# MAIN
+# ============================================================
 
 def main():
-    """Hlavná funkcia s rôznymi príkladmi"""
-    
     examples = [
         "Koľko je 15 plus 25?",
         "Aký je teraz čas?",
         "Hoď tromi kockami",
-        "Aké je počasie v Bratislave?",
-        "Vypočítaj 100 deleno 5, potom výsledok vynásob 3, a hoď toľkými kockami",
     ]
-    
-    print("\n" + "="*70)
-    print("🎯 DEMO: Rozšírený AI Agent s viacerými nástrojmi")
-    print("="*70)
-    print("\nDostupné nástroje:")
-    print("  • calculate - matematické operácie")
-    print("  • get_current_time - aktuálny čas")
-    print("  • roll_dice - hádzanie kockami")
-    print("  • get_weather - predpoveď počasia (simulovaná)")
-    print()
-    
-    # Spusť všetky príklady
-    for i, example in enumerate(examples, 1):
-        print(f"\n{'#'*70}")
-        print(f"# Príklad {i}/{len(examples)}")
-        print(f"{'#'*70}")
-        run_advanced_agent(example)
-        
-        if i < len(examples):
-            input("Stlač Enter pre ďalší príklad...")
+    for ex in examples:
+        print("\n" + "=" * 70)
+        print("👤", ex)
+        run_advanced_agent(ex)
 
 
 if __name__ == "__main__":
