@@ -72,6 +72,12 @@ GEMINI_API_KEY=your_actual_api_key_here
 ```bash
 python agent.py
 ```
+```bash
+python agent_react.py
+```
+```bash
+python agent_advanced.py
+```
 
 ## 🔧 Ako to funguje
 
@@ -87,23 +93,22 @@ Používateľ
 Finálna odpoveď
 ```
 
-
 ## 📁 Štruktúra projektu
 
 ```
 .
 ├── agent.py              # ⭐ Základný AI agent (hlavné zadanie)
-├── agent_react.py              # ⭐ Základný AI agent ReAct (hlavné zadanie)
+├── agent_react.py        # ⭐ Základný AI agent ReAct (hlavné zadanie)
 ├── agent_advanced.py     # 🚀 Rozšírená verzia s viacerými nástrojmi
 ├── agent_ollama.py       # 🦙 Alternatíva s lokálnym LLM (Ollama)
-├── list_models.py       # 🤖 Zoznam dostupných gemini modelov pre api
+├── list_models.py        # 🤖 Zoznam dostupných gemini modelov pre api
 ├── requirements.txt      # Python závislosti
-├── .env.example         # Šablóna pre environment premenné
-├── .env                 # Vaše API kľúče (nie v gite!)
-├── .gitignore           # Git ignore súbor
-└── README.md            # Tento súbor
+├── .env.example          # Šablóna pre environment premenné
+├── .env                  # Vaše API kľúče (nie v gite!)
+├── .gitignore            # Git ignore súbor
+└── README.md             # Tento súbor
 ```
-## ▶️ Použitie
+## ▶️ Použitie (agent_react.py)
 
 ### Jednoduchý výpočet:
 <img width="670" height="457" alt="image" src="https://github.com/user-attachments/assets/f5a61314-290f-4e52-9e11-174c5c4f4849" />
