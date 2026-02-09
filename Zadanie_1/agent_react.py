@@ -19,9 +19,8 @@ if not API_KEY:
 
 MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 
-
 # ============================================================
-# NÁSTROJE (TOOLS)
+# NÁSTROJE
 # ============================================================
 
 def calculate(operation: str, a: float, b: float) -> Dict[str, Any]:
@@ -61,7 +60,6 @@ available_functions = {
     "calculate": calculate,
 }
 
-
 # Tool schema pre Gemini
 calculate_tool = types.Tool(
     function_declarations=[
@@ -90,7 +88,6 @@ calculate_tool = types.Tool(
         )
     ]
 )
-
 
 # ============================================================
 # REACT AGENT
@@ -135,7 +132,7 @@ class GeminiReActAgent:
         print(f"{'='*70}")
         print(f"\n👤 Používateľ: {user_message}\n")
         
-        # História konverzácie (podobne ako v Anthropic)
+        # História konverzácie
         contents_history: List[types.Content] = []
         
         # Prvá user message
@@ -176,7 +173,7 @@ class GeminiReActAgent:
             
             parts = response.candidates[0].content.parts
             
-            # Extrahovanie všetkých function calls (môže byť viac naraz!)
+            # Extrahovanie všetkých function calls
             function_calls = [
                 p for p in parts 
                 if hasattr(p, 'function_call') and p.function_call
@@ -222,7 +219,6 @@ class GeminiReActAgent:
                     tool_results_parts.append(tool_result_part)
                 
                 # Pridaj všetky tool results ako "user" message
-                # (podobne ako Anthropic: tool results idú ako user content)
                 contents_history.append(
                     types.Content(
                         role="user",
