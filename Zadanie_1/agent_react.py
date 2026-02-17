@@ -1,50 +1,42 @@
 """
-Minimálny AI agent s tool-callingom (ReAct)
+Minimálny AI agent s tool-callingom (ReAct pattern)
 Zadanie: Lekcia 1 - AI Agenti
 """
 
 import os
 import json
-from typing import List, Dict, Any, Optional
+from typing import Dict, Any, Callable
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
-# Načítanie environment premenných
 load_dotenv()
 
+# Validácia konfigurácie
 API_KEY = os.getenv("GEMINI_API_KEY")
 if not API_KEY:
     raise SystemExit("❌ Chýba GEMINI_API_KEY v .env súbore")
 
 MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 
+
 # ============================================================
 # NÁSTROJE
 # ============================================================
 
 def calculate(operation: str, a: float, b: float) -> Dict[str, Any]:
-    """
-    Vykonáva základné matematické operácie.
+    """Vykonáva základné matematické operácie s error handlingom."""
     
-    Args:
-        operation: Typ operácie (add, subtract, multiply, divide)
-        a: Prvé číslo
-        b: Druhé číslo
-        
-    Returns:
-        Dict s výsledkom alebo chybou
-    """
-    ops = {
+    ops: Dict[str, Callable[[float, float], float]] = {
         "add": lambda x, y: x + y,
         "subtract": lambda x, y: x - y,
         "multiply": lambda x, y: x * y,
         "divide": lambda x, y: x / y,
     }
     
+    # Validácia vstupov
     if operation not in ops:
         return {"error": f"Neznáma operácia: {operation}"}
-    
     if operation == "divide" and b == 0:
         return {"error": "Delenie nulou nie je možné"}
     
@@ -55,202 +47,159 @@ def calculate(operation: str, a: float, b: float) -> Dict[str, Any]:
         return {"error": str(e)}
 
 
-# Mapovanie dostupných nástrojov
-available_functions = {
-    "calculate": calculate,
-}
+# Registry dostupných funkcií a ich schém
+AVAILABLE_FUNCTIONS: Dict[str, Callable] = {"calculate": calculate}
 
-# Tool schema pre Gemini
-calculate_tool = types.Tool(
-    function_declarations=[
-        types.FunctionDeclaration(
-            name="calculate",
-            description="Vykonáva základné matematické operácie (sčítanie, odčítanie, násobenie, delenie) nad dvoma číslami.",
-            parameters=types.Schema(
-                type=types.Type.OBJECT,
-                properties={
-                    "operation": types.Schema(
-                        type=types.Type.STRING,
-                        enum=["add", "subtract", "multiply", "divide"],
-                        description="Typ matematickej operácie",
-                    ),
-                    "a": types.Schema(
-                        type=types.Type.NUMBER,
-                        description="Prvé číslo"
-                    ),
-                    "b": types.Schema(
-                        type=types.Type.NUMBER,
-                        description="Druhé číslo"
-                    ),
-                },
-                required=["operation", "a", "b"],
-            ),
-        )
-    ]
-)
+TOOLS = [
+    types.Tool(
+        function_declarations=[
+            types.FunctionDeclaration(
+                name="calculate",
+                description="Vykonáva základné matematické operácie (sčítanie, odčítanie, násobenie, delenie) nad dvoma číslami.",
+                parameters=types.Schema(
+                    type=types.Type.OBJECT,
+                    properties={
+                        "operation": types.Schema(
+                            type=types.Type.STRING,
+                            enum=["add", "subtract", "multiply", "divide"],
+                            description="Typ matematickej operácie",
+                        ),
+                        "a": types.Schema(type=types.Type.NUMBER, description="Prvé číslo"),
+                        "b": types.Schema(type=types.Type.NUMBER, description="Druhé číslo"),
+                    },
+                    required=["operation", "a", "b"],
+                ),
+            )
+        ]
+    )
+]
+
 
 # ============================================================
 # REACT AGENT
 # ============================================================
 
 class GeminiReActAgent:
-    """
-    ReAct (Reason and Act) agent pre Gemini API.
-    Podobný workflow ako Anthropic agent.
-    """
+    """ReAct (Reason and Act) agent pre Gemini API."""
     
-    def __init__(self, model: str = MODEL, api_key: str = API_KEY):
-        """
-        Inicializácia agenta.
-        
-        Args:
-            model: Názov Gemini modelu
-            api_key: Gemini API kľúč
-        """
+    def __init__(self, model: str = MODEL, api_key: str = API_KEY, max_iterations: int = 10):
         self.model = model
         self.client = genai.Client(api_key=api_key)
-        self.max_iterations = 10
-        self.tools = [calculate_tool]
+        self.max_iterations = max_iterations
+        self.tools = TOOLS
     
-    def run(
-        self,
-        user_message: str,
-        system_prompt: str = "Si užitočný AI asistent. Keď potrebuješ vykonať výpočet, použi dostupné nástroje."
-    ) -> str:
-        """
-        Spustí ReAct loop až kým nedostane finálnu odpoveď.
+    def _execute_tool_call(self, fn_name: str, fn_args: Dict[str, Any]) -> Dict[str, Any]:
+        """Vykoná jeden tool call s error handlingom."""
+        print(f"\n🛠️  Vykonávam: {fn_name}({json.dumps(fn_args, ensure_ascii=False)})")
         
-        Args:
-            user_message: Používateľská otázka
-            system_prompt: Systémový prompt (opcional)
+        if fn_name not in AVAILABLE_FUNCTIONS:
+            result = {"error": f"Neznámy nástroj: {fn_name}"}
+            print(f"   ❌ {result['error']}")
+            return result
+        
+        try:
+            result = AVAILABLE_FUNCTIONS[fn_name](**fn_args)
+            print(f"   ✅ Výsledok: {json.dumps(result, ensure_ascii=False)}")
+            return result
+        except Exception as e:
+            result = {"error": str(e)}
+            print(f"   ❌ Chyba: {e}")
+            return result
+    
+    def _process_function_calls(self, parts: list) -> list[types.Part]:
+        """Spracuje všetky function calls z odpovede a vráti results."""
+        function_calls = [p for p in parts if hasattr(p, 'function_call') and p.function_call]
+        
+        if not function_calls:
+            return []
+        
+        print(f"🔧 Našiel som {len(function_calls)} tool call(s)")
+        
+        # Vykonaj všetky tool calls paralelne (v budúcnosti môže byť async)
+        tool_results = []
+        for fc_part in function_calls:
+            fc = fc_part.function_call
+            result = self._execute_tool_call(fc.name, dict(fc.args or {}))
             
-        Returns:
-            Finálna odpoveď od LLM
-        """
-        print(f"\n{'='*70}")
-        print(f"🤖 GEMINI REACT AGENT")
-        print(f"{'='*70}")
-        print(f"\n👤 Používateľ: {user_message}\n")
+            tool_results.append(
+                types.Part(
+                    function_response=types.FunctionResponse(
+                        name=fc.name,
+                        response=result
+                    )
+                )
+            )
         
-        # História konverzácie
-        contents_history: List[types.Content] = []
+        return tool_results
+    
+    def _call_llm(self, contents: list[types.Content]) -> Any:
+        """Wrapper pre LLM call s error handlingom."""
+        try:
+            return self.client.models.generate_content(
+                model=self.model,
+                contents=contents,
+                config=types.GenerateContentConfig(tools=self.tools, temperature=0.0)
+            )
+        except Exception as e:
+            print(f"❌ Chyba pri volaní API: {e}")
+            raise
+    
+    def run(self, user_message: str, system_prompt: str = "Si užitočný AI asistent. Keď potrebuješ vykonať výpočet, použi dostupné nástroje.") -> str:
+        """Spustí ReAct loop až kým nedostane finálnu odpoveď."""
         
-        # Prvá user message
-        initial_prompt = f"{system_prompt}\n\nOtázka: {user_message}"
-        contents_history.append(
+        print(f"\n{'='*70}\n🤖 GEMINI REACT AGENT\n{'='*70}\n")
+        print(f"👤 Používateľ: {user_message}\n")
+        
+        # Inicializácia histórie s prvou user message
+        contents_history = [
             types.Content(
                 role="user",
-                parts=[types.Part(text=initial_prompt)]
+                parts=[types.Part(text=f"{system_prompt}\n\nOtázka: {user_message}")]
             )
-        )
+        ]
         
-        iteration = 0
-        
-        while iteration < self.max_iterations:
-            iteration += 1
+        # ReAct loop
+        for iteration in range(1, self.max_iterations + 1):
             print(f"--- Iterácia {iteration} ---")
-            
-            # Volanie LLM
             print("📡 Volám Gemini API...")
             
             try:
-                response = self.client.models.generate_content(
-                    model=self.model,
-                    contents=contents_history,
-                    config=types.GenerateContentConfig(
-                        tools=self.tools,
-                        temperature=0.0
-                    )
-                )
+                response = self._call_llm(contents_history)
             except Exception as e:
-                print(f"❌ Chyba pri volaní API: {e}")
                 return f"Chyba: {str(e)}"
             
-            # Kontrola odpovede
+            # Validácia odpovede
             if not response.candidates or not response.candidates[0].content.parts:
                 print("⚠️ Prázdna odpoveď od LLM")
                 return "Chyba: Prázdna odpoveď"
             
             parts = response.candidates[0].content.parts
             
-            # Extrahovanie všetkých function calls
-            function_calls = [
-                p for p in parts 
-                if hasattr(p, 'function_call') and p.function_call
-            ]
+            # Spracovanie function calls (ak existujú)
+            tool_results = self._process_function_calls(parts)
             
-            # Ak sú function calls, vykonaj ich
-            if function_calls:
-                print(f"🔧 Našiel som {len(function_calls)} tool call(s)")
-                
-                # Pridaj assistant odpoveď s function calls do histórie
-                contents_history.append(response.candidates[0].content)
-                
-                # Vykonaj všetky tool calls a zbieraj výsledky
-                tool_results_parts = []
-                
-                for fc_part in function_calls:
-                    fc = fc_part.function_call
-                    fn_name = fc.name
-                    fn_args = dict(fc.args or {})
-                    
-                    print(f"\n🛠️  Vykonávam: {fn_name}({json.dumps(fn_args, ensure_ascii=False)})")
-                    
-                    # Vykonaj funkciu
-                    if fn_name in available_functions:
-                        try:
-                            function_to_call = available_functions[fn_name]
-                            function_response = function_to_call(**fn_args)
-                            print(f"   ✅ Výsledok: {json.dumps(function_response, ensure_ascii=False)}")
-                        except Exception as e:
-                            function_response = {"error": str(e)}
-                            print(f"   ❌ Chyba: {e}")
-                    else:
-                        function_response = {"error": f"Neznámy nástroj: {fn_name}"}
-                        print(f"   ❌ Neznámy nástroj: {fn_name}")
-                    
-                    # Vytvor function response part
-                    tool_result_part = types.Part(
-                        function_response=types.FunctionResponse(
-                            name=fn_name,
-                            response=function_response
-                        )
-                    )
-                    tool_results_parts.append(tool_result_part)
-                
-                # Pridaj všetky tool results ako "user" message
-                contents_history.append(
-                    types.Content(
-                        role="user",
-                        parts=tool_results_parts
-                    )
-                )
-                
+            if tool_results:
+                # Pridaj assistant odpoveď a tool results do histórie
+                contents_history.extend([
+                    response.candidates[0].content,
+                    types.Content(role="user", parts=tool_results)
+                ])
                 print("")
-                # Pokračuj na ďalšiu iteráciu
                 continue
             
-            # Ak nie sú function calls, skontroluj text odpoveď
-            text_parts = [p for p in parts if hasattr(p, 'text') and p.text]
+            # Žiadne function calls - hľadaj finálnu textovú odpoveď
+            final_text = "\n".join(p.text for p in parts if hasattr(p, 'text') and p.text)
             
-            if text_parts:
-                final_text = "\n".join(p.text for p in text_parts)
-                
-                # Pridaj finálnu odpoveď do histórie
+            if final_text:
                 contents_history.append(response.candidates[0].content)
-                
-                print(f"\n💬 Finálna odpoveď:")
-                print(f"{'='*70}")
-                print(final_text)
-                print(f"{'='*70}\n")
-                
+                print(f"\n💬 Finálna odpoveď:\n{'='*70}\n{final_text}\n{'='*70}\n")
                 return final_text
             
-            # Fallback
+            # Fallback pri neočakávanej odpovedi
             print("⚠️ Neočakávaná odpoveď od LLM")
             return "Chyba: Neočakávaná odpoveď"
         
-        # Ak sme dosiahli max iterácií
+        # Max iterácií dosiahnutých
         error_msg = "⚠️ Dosiahnutý maximálny počet iterácií bez finálnej odpovede"
         print(error_msg)
         return error_msg
@@ -261,22 +210,18 @@ class GeminiReActAgent:
 # ============================================================
 
 def main():
-    """Hlavná funkcia s demo príkladmi"""
-    
-    # Vytvor agenta
+    """Demo príklady použitia agenta."""
     agent = GeminiReActAgent()
     
-    # Príklad 1: Jednoduchý výpočet (single tool call)
-    print("\n" + "="*70)
-    print("PRÍKLAD 1: Jednoduchý výpočet")
-    print("="*70)
-    result1 = agent.run("Koľko je 25 krát 4?")
+    examples = [
+        ("PRÍKLAD 1: Jednoduchý výpočet", "Koľko je 25 krát 4?"),
+        ("PRÍKLAD 2: Komplexný výpočet", "Vypočítaj (150 + 50) deleno 4, potom výsledok vynásob 2"),
+    ]
     
-    # Príklad 2: Komplexný výpočet
-    print("\n" + "="*70)
-    print("PRÍKLAD 2: Komplexný výpočet")
-    print("="*70)
-    result2 = agent.run("Vypočítaj (150 + 50) deleno 4, potom výsledok vynásob 2")
+    for title, query in examples:
+        print(f"\n{'='*70}\n{title}\n{'='*70}")
+        agent.run(query)
+
 
 if __name__ == "__main__":
     main()
