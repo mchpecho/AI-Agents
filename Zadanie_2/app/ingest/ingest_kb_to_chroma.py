@@ -71,6 +71,7 @@ def main():
         meta = {
             "source_path": fp.replace("\\", "/"),
             "type": obj.get("type", "kb"),
+            "language": obj.get("language", "en"),
             "alarm_codes": ",".join(obj.get("alarm_codes", [])) if isinstance(obj.get("alarm_codes"), list) else str(obj.get("alarm_codes", "")),
             "related_tags": ",".join(obj.get("related_tags", [])) if isinstance(obj.get("related_tags"), list) else str(obj.get("related_tags", "")),
         }

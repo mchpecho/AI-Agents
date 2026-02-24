@@ -1,0 +1,17 @@
+{
+  "type": "sop",
+  "language": "sk",
+  "title": "SOP: E221 – Detekovaný prešmyk",
+  "summary": "Postup pri detekcii prešmyku – stabilizácia procesu a overenie príčin.",
+  "alarm_codes": ["E221"],
+  "related_tags": ["SlipDetected", "LineSpeed_mpm", "Tension_N", "SpoolRPM", "Vibration_mm_s"],
+  "steps": [
+    "Znížte rýchlosť linky (LineSpeed_mpm) o 10–30 % a sledujte, či SlipDetected prestane.",
+    "Skontrolujte prítlak podávacích valcov: kontamináciu, opotrebenie, olej alebo prach.",
+    "Overte, že Tension_N je v normálnom rozsahu (nízke napätie podporuje prešmyk).",
+    "Skontrolujte synchronizáciu otáčok cievky (SpoolRPM) a plynulosť navíjania.",
+    "Ak prešmyk pretrváva, zastavte stroj a vykonajte čistenie a nastavenie.",
+    "Po zásahu testujte na nižšej rýchlosti a postupne sa vráťte na setpoint."
+  ],
+  "body": "Prešmyk môže spôsobiť nestabilnú kvalitu a zvýšiť riziko alarmu E204."
+}

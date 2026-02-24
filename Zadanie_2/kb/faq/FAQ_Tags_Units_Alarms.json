@@ -1,5 +1,6 @@
 {
   "type": "faq",
+  "language": "en",
   "title": "Mini Manual: Tags, Units, Thresholds and Alarms (MVP)",
   "summary": "Quick overview of telemetry tags, units, typical thresholds, and meanings of alarms E204/E221/E301.",
   "tags": [

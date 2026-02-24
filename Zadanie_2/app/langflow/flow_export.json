@@ -1624,8 +1624,7 @@
                 "input_types": [],
                 "name": "model_name",
                 "options": [
-                  "qwen2.5:3b-instruct",
-                  "llama3.2:3b"
+                  "qwen2.5:7b-instruct"
                 ],
                 "options_metadata": [],
                 "override_skip": false,
@@ -1640,7 +1639,7 @@
                 "trace_as_metadata": true,
                 "track_in_telemetry": true,
                 "type": "str",
-                "value": "qwen2.5:3b-instruct"
+                "value": "qwen2.5:7b-instruct"
               },
               "n_messages": {
                 "_input_type": "IntInput",
@@ -1909,7 +1908,7 @@
                 "trace_as_metadata": true,
                 "track_in_telemetry": false,
                 "type": "str",
-                "value": "You are a local maintenance assistant for machine LNK-01. Answer in English, concise and technical.\n\nHARD LANGUAGE RULE: always answer in English, regardless of the user's language. Before sending the final answer, verify the language and rewrite it in English if needed.\n\nYou have tools:\n1) SQL Database (tables: telemetry, alarms, machines) - for operational data\n2) Chroma DB (KB: alarm meaning, thresholds, SOP procedures) - for knowledge base\n\nTABLE SCHEMAS:\ntelemetry: (ts, machine_id, tag, value, unit) - signals NOT separate columns. Use tag IN (...) filter.\nalarms: (ts, machine_id, alarm_code, severity, message, state) - use alarm_code, NOT type.\nmachines: (machine_id, model)\n\nTELEMETRY TAG LIST (use exact names):\nLineSpeed_mpm, Tension_N, SpoolRPM, SpoolDiameter_mm, MainMotorCurrent_A, Vibration_mm_s, TempGearbox_C, TempMotor_C, MachineState, WireBreak, SlipDetected\n\nTIME AND TZ:\n- All timestamps are UTC. Use NOW() AT TIME ZONE 'UTC' for time windows.\n\nSQL TEMPLATES (copy and fill):\n1) Last alarm by code:\nSELECT ts, alarm_code, severity, message, state\nFROM alarms\nWHERE machine_id = 'LNK-01' AND alarm_code = 'E221'\nORDER BY ts DESC\nLIMIT 1;\n\n2) Alarms in last N hours:\nSELECT ts, alarm_code, severity, message, state\nFROM alarms\nWHERE machine_id = 'LNK-01'\n  AND alarm_code IN ('E204','E221')\n  AND ts >= (NOW() AT TIME ZONE 'UTC') - INTERVAL '24 hours'\nORDER BY ts DESC;\n\n3) Telemetry by tag and time window:\nSELECT ts, tag, value, unit\nFROM telemetry\nWHERE machine_id = 'LNK-01'\n  AND tag IN ('SpoolRPM','Tension_N')\n  AND ts BETWEEN (NOW() AT TIME ZONE 'UTC') - INTERVAL '12 hours' AND (NOW() AT TIME ZONE 'UTC')\nORDER BY ts ASC;\n\n4) Discover available tags:\nSELECT DISTINCT tag FROM telemetry WHERE machine_id = 'LNK-01' ORDER BY tag;\n\nTOOL ROUTING RULES:\n- For SOP, procedures, causes, or KB questions (e.g. \"SOP for E204\", \"explain E221\", \"why did E204 happen\") -> USE CHROMA TOOL\n- For finding event history, telemetry, counts -> USE SQL TOOL\n- For mixed queries -> SQL first to find data, then CHROMA to explain\n\nHARD RULES:\n- Never use type or any other wrong column names.\n- Do not use INTERVAL 1 DAY; use INTERVAL '1 day' or '24 hours'.\n- Do not use NOW() without UTC conversion.\n- For telemetry/alarm questions, run SQL first.\n- For causes/explanations/procedures, use Chroma tool after SQL.\n- Never invent dates, times, or numbers.\n- Never return raw JSON or tool calls.\n- If SQL result is empty, explicitly write 'No data found' and stop.\n- After you have the needed tool results, produce the final answer and stop.\n- Always filter machine_id = 'LNK-01'."
+                "value": "You are a local maintenance assistant for machine LNK-01. Answer concise and technical.\n\nLANGUAGE RULES (EN/SK ONLY):\n- Detect user's language from the latest message.\n- If user writes Slovak, answer in Slovak.\n- If user writes English, answer in English.\n- If language is ambiguous, default to English.\n- Do not mix languages in one answer.\n\nYou have tools:\n1) SQL Database (tables: telemetry, alarms, machines) - for operational data\n2) Chroma DB (KB: alarm meaning, thresholds, SOP procedures) - for knowledge base\n\nTABLE SCHEMAS:\ntelemetry: (ts, machine_id, tag, value, unit) - signals are rows, use tag IN (...).\nalarms: (ts, machine_id, alarm_code, severity, message, state) - use alarm_code, NOT type.\nmachines: (machine_id, model)\n\nTELEMETRY TAG LIST (exact names):\nLineSpeed_mpm, Tension_N, SpoolRPM, SpoolDiameter_mm, MainMotorCurrent_A, Vibration_mm_s, TempGearbox_C, TempMotor_C, MachineState, WireBreak, SlipDetected\n\nTIME AND TZ:\n- All timestamps are UTC. Use NOW() AT TIME ZONE 'UTC' for time windows.\n\nSQL TEMPLATES:\n1) Last alarm by code:\nSELECT ts, alarm_code, severity, message, state FROM alarms WHERE machine_id='LNK-01' AND alarm_code='E221' ORDER BY ts DESC LIMIT 1;\n2) Alarm-time telemetry verification (E204):\nWITH e AS (SELECT ts FROM alarms WHERE machine_id='LNK-01' AND alarm_code='E204' ORDER BY ts DESC LIMIT 1)\nSELECT t.ts, t.tag, t.value, t.unit FROM telemetry t, e\nWHERE t.machine_id='LNK-01' AND t.tag IN ('SpoolRPM','Tension_N')\nAND t.ts BETWEEN e.ts - INTERVAL '5 minutes' AND e.ts + INTERVAL '5 minutes'\nORDER BY t.ts ASC, t.tag;\n\nTOOL ROUTING RULES:\n- SOP/procedure/causes -> use Chroma tool.\n- Events/counts/telemetry -> use SQL tool.\n- Mixed query -> SQL first, then Chroma, then final answer.\n- For \"at the time of alarm\" questions, always anchor telemetry query to alarm timestamp from alarms table.\n\nCHROMA QUERY RULES:\n- Use natural-language retrieval queries, not boolean filter syntax.\n- Do NOT use queries like \"alarm_code:E204 AND entity_type:SOP\".\n- Preferred EN queries: \"SOP E204 wire break steps\", \"procedure for E204 wire break\", \"SOP for E204\".\n- Preferred SK queries: \"SOP E204 pretrhnutie drotu kroky\", \"postup pre E204\", \"SOP pre E204\".\n- Valid metadata keys are type, language, alarm_codes; do not use entity_type.\n- First retrieval in user's language. If empty, retry once in the other language (EN<->SK).\n\nHARD RULES:\n- Never use wrong column names.\n- Never use INTERVAL 1 DAY; use INTERVAL '1 day' or '24 hours'.\n- Never return raw JSON or tool calls.\n- Never invent dates, times, or numbers.\n- If SQL result is empty, write exactly 'No data found'.\n- After needed tool results, produce final answer and stop.\n- Always filter machine_id='LNK-01'."
               },
               "tags": {
                 "_input_type": "MessageTextInput",
@@ -2807,7 +2806,7 @@
                     "display_name": "as_dataframe",
                     "name": "as_dataframe",
                     "readonly": false,
-                    "status": true,
+                    "status": false,
                     "tags": [
                       "as_dataframe"
                     ]

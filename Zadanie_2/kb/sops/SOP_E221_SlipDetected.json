@@ -1,5 +1,6 @@
 {
   "type": "sop",
+  "language": "en",
   "title": "SOP: E221 – Slip Detected",
   "summary": "Procedure for slip detection – stabilize process and verify causes.",
   "alarm_codes": [

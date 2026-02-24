@@ -1,0 +1,18 @@
+{
+  "type": "sop",
+  "language": "sk",
+  "title": "SOP: E204 – Pretrhnutie drôtu",
+  "summary": "Bezpečný postup na obnovenie výroby po pretrhnutí drôtu.",
+  "alarm_codes": ["E204"],
+  "related_tags": ["WireBreak", "MachineState", "LineSpeed_mpm", "Tension_N", "SpoolRPM"],
+  "steps": [
+    "Zaistite stroj: potvrďte STOP a počkajte na úplné zastavenie všetkých pohonov.",
+    "Vizuálne skontrolujte trasu drôtu a miesto pretrhnutia (vedenia, kladky, navíjanie).",
+    "Odstráňte zvyšky drôtu z rizikových miest (vedenia, valce, cievka).",
+    "Skontrolujte nastavenie napätia (Tension_N) a prípadné mechanické poškodenie.",
+    "Znova navlečte drôt podľa štandardnej trasy a overte uchytenie na cievke.",
+    "Spustite pomaly (nízka LineSpeed_mpm) a 1–2 minúty sledujte Tension_N a SpoolRPM.",
+    "Ak sa E204 opakuje, znížte rýchlosť a eskalujte na údržbu (možné poškodenie vedení/kladiek)."
+  ],
+  "body": "Cieľom je minimalizovať opakované pretrhnutia drôtu a bezpečne obnoviť prevádzku."
+}

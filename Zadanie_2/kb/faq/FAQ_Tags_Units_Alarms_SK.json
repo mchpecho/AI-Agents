@@ -1,0 +1,44 @@
+{
+  "type": "faq",
+  "language": "sk",
+  "title": "Mini manuál: Tagy, jednotky, prahy a alarmy (MVP)",
+  "summary": "Rýchly prehľad telemetrických tagov, jednotiek, typických prahov a významov alarmov E204/E221/E301.",
+  "tags": [
+    {"tag": "LineSpeed_mpm", "unit": "mpm", "desc": "Rýchlosť linky v metroch za minútu.", "typical_range": [0, 160]},
+    {"tag": "Tension_N", "unit": "N", "desc": "Napätie drôtu v newtonoch.", "typical_range": [80, 260]},
+    {"tag": "SpoolRPM", "unit": "rpm", "desc": "Otáčky cievky za minútu.", "typical_range": [0, 140]},
+    {"tag": "SpoolDiameter_mm", "unit": "mm", "desc": "Odhadovaný priemer cievky.", "typical_range": [200, 280]},
+    {"tag": "MainMotorCurrent_A", "unit": "A", "desc": "Prúd hlavného motora.", "typical_range": [10, 35]},
+    {"tag": "Vibration_mm_s", "unit": "mm/s", "desc": "RMS vibrácie – orientačný indikátor mechanického stavu.", "typical_range": [0, 4]},
+    {"tag": "TempGearbox_C", "unit": "C", "desc": "Teplota prevodovky.", "typical_range": [35, 75]},
+    {"tag": "TempMotor_C", "unit": "C", "desc": "Teplota motora.", "typical_range": [30, 80]},
+    {"tag": "MachineState", "unit": "", "desc": "0=STOP, 1=RUN, 3=ALARM.", "typical_range": [0, 3]},
+    {"tag": "WireBreak", "unit": "", "desc": "0/1 – indikátor pretrhnutia drôtu (syntetický).", "typical_range": [0, 1]},
+    {"tag": "SlipDetected", "unit": "", "desc": "0/1 – indikátor prešmyku (syntetický).", "typical_range": [0, 1]}
+  ],
+  "thresholds": {
+    "Vibration_mm_s_warn": 3.0,
+    "Vibration_mm_s_crit": 4.5,
+    "TempGearbox_C_warn": 78.0,
+    "TempGearbox_C_crit": 85.0,
+    "TempMotor_C_warn": 80.0
+  },
+  "alarm_codes": ["E204", "E221", "E301"],
+  "alarms": [
+    {"code": "E204", "severity": "CRIT", "meaning": "Detekované pretrhnutie drôtu. Stroj typicky zníži rýchlosť a prejde do stavu ALARM."},
+    {"code": "E221", "severity": "WARN", "meaning": "Detekovaný prešmyk. Môže súvisieť s nastavením prítlaku, opotrebením alebo kontamináciou."},
+    {"code": "E301", "severity": "CRIT", "meaning": "Prevodovka – nadmerná teplota. Pri dlhšom trvaní hrozí poškodenie mazania/ložiska."}
+  ],
+  "related_tags": [
+    "LineSpeed_mpm",
+    "Tension_N",
+    "SpoolRPM",
+    "MainMotorCurrent_A",
+    "Vibration_mm_s",
+    "TempGearbox_C",
+    "MachineState",
+    "WireBreak",
+    "SlipDetected"
+  ],
+  "body": "Poznámka: Ide o syntetickú, všeobecnú KB pre demo účely. Prahy sú orientačné a nie sú záväzné výrobné špecifikácie."
+}

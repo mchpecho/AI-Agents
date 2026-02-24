@@ -56,7 +56,7 @@ services:
     environment:
       OLLAMA_HOST: http://ollama:11434
     entrypoint: ["/bin/sh", "-lc"]
-    command: "ollama pull qwen2.5:3b-instruct && ollama pull llama3.2:3b && ollama pull nomic-embed-text"
+    command: "ollama pull qwen2.5:7b-instruct && ollama pull nomic-embed-text"
     restart: "no"
 
   langflow:
@@ -83,7 +83,7 @@ services:
       CHROMA_COLLECTION: ${CHROMA_COLLECTION:-kb_lankovacka}
 
       OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://ollama:11434}
-      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.2:3b}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5:7b-instruct}
 
     ports:
       - "${LANGFLOW_PORT:-7860}:7860"

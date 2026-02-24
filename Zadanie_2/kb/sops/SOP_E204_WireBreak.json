@@ -1,5 +1,6 @@
 {
   "type": "sop",
+  "language": "en",
   "title": "SOP: E204 – Wire Break",
   "summary": "Safe procedure to restore production after wire break.",
   "alarm_codes": [

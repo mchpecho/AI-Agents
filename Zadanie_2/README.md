@@ -22,8 +22,7 @@ docker compose up -d
 ```
 
 On first startup, the `ollama-init` service automatically runs and downloads the models:
-- `qwen2.5:3b-instruct`
-- `llama3.2:3b`
+- `qwen2.5:7b-instruct`
 - `nomic-embed-text`
 
 Verification:
@@ -35,12 +34,11 @@ docker exec -it lf_ollama ollama list
 ## 2) Pull Ollama models (manual fallback)
 If `ollama-init` fails or is skipped, run manually:
 ```bash
-ollama pull qwen2.5:3b-instruct
-ollama pull llama3.2:3b
+ollama pull qwen2.5:7b-instruct
 ollama pull nomic-embed-text
 ```
 
-> Default chat model is `qwen2.5:3b-instruct` (configurable via `OLLAMA_MODEL` in `.env`).
+> Default chat model is `qwen2.5:7b-instruct` (configurable via `OLLAMA_MODEL` in `.env`).
 
 ## 3) Ingest KB into Chroma
 Run on your host (Windows or Linux/macOS):
@@ -50,6 +48,8 @@ python -m venv .venv
 pip install -r app/ingest/requirements.txt
 python app/ingest/ingest_kb_to_chroma.py
 ```
+
+The ingest now loads multilingual KB files (EN + SK) from `kb/faq` and `kb/sops`.
 
 Quick sanity check of telemetry for the last 2 hours:
 ```bash
@@ -91,9 +91,11 @@ ollama pull nomic-embed-text
 In LangFlow:
 - **Flows → Import** and select `app/langflow/flow_export.json`
 - If import fails (versions differ), follow `app/langflow/setup_notes.md`
-  - `app/langflow/flow_export.json` mirrors `app/langflow/versions/flow_export_v1.7.3.json`
+  - Alternatively, import `app/langflow/LNK-01_Workflow.json`
 
-Note: This `README.md` is the primary setup source. Documents in `app/langflow/versions/` are supplementary/archival only.
+The flow supports multilingual answers (English/Slovak): it responds in the same language as the user message.
+
+Note: This `README.md` is the primary setup source.
 
 ## 5) Demo questions
 1. "Summarize the last 2 hours of machine LNK-01 operation: speed, tension, temperatures, and vibrations."
@@ -111,7 +113,7 @@ Note: This `README.md` is the primary setup source. Documents in `app/langflow/v
 ## 7) Troubleshooting
 - Empty agent response: ensure you imported `app/langflow/flow_export.json` (not the empty wrapper) and that Chat Output is connected.
 - Empty KB context: ensure an **Ollama Embeddings** component is connected to the Chroma **Embedding** input (model `nomic-embed-text`).
-- Ollama model missing: run `ollama pull qwen2.5:3b-instruct`, `ollama pull llama3.2:3b`, and `ollama pull nomic-embed-text`.
+- Ollama model missing: run `ollama pull qwen2.5:7b-instruct` and `ollama pull nomic-embed-text`.
 - Flow returns only tool calls/JSON: in the Agent node, disable `Enable Structured Output`, leave the schema empty, and reimport the flow.
 - Flow returns repeated tool calls (`run`, `get_last_event`) or stale timestamps: create a new chat/session in LangFlow, reimport the flow, and set `n_messages` to a low value (e.g., 5).
 - Flow returns response in wrong language or generic text like "Based on the tool response": reimport `app/langflow/flow_export.json`, create a new chat/session, and verify that the Agent `system_prompt` contains the rule "always answer in English".
@@ -130,4 +132,15 @@ rm -rf .data
 
 ## 10) Usage
 <img width="788" height="686" alt="image" src="https://github.com/user-attachments/assets/411414d1-a069-4e6f-add9-d68fa5a778e5" />
+
+## 11) Multilanguage smoke test (EN/SK)
+After importing the flow, open a **new chat session** and test both languages:
+
+- EN: "Provide the SOP for E204 and verify if telemetry shows changes in SpoolRPM or Tension_N at the alarm time."
+- SK: "Daj SOP pre E204 a over, či telemetria ukazuje zmeny SpoolRPM alebo Tension_N v čase alarmu."
+
+Expected behavior:
+- The answer language matches the query language (EN query -> EN answer, SK query -> SK answer).
+- SQL part is anchored to alarm time (E204 timestamp ± 5 minutes).
+- SOP content is retrieved from KB with the same language preference and fallback to the other language when needed.
 

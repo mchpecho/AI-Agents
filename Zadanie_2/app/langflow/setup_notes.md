@@ -19,7 +19,7 @@ Agent that:
 - CHROMA_PORT=8000
 - CHROMA_COLLECTION=kb_lankovacka
 - OLLAMA_BASE_URL=http://ollama:11434
-- OLLAMA_MODEL=llama3.2:3b
+- OLLAMA_MODEL=qwen2.5:7b-instruct
 
 ## Components (names may vary slightly by LangFlow version)
 1) **Chat Model → Ollama**

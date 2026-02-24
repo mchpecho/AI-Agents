@@ -1624,8 +1624,7 @@
                 "input_types": [],
                 "name": "model_name",
                 "options": [
-                  "qwen2.5:3b-instruct",
-                  "llama3.2:3b"
+                  "qwen2.5:7b-instruct"
                 ],
                 "options_metadata": [],
                 "override_skip": false,
@@ -1640,7 +1639,7 @@
                 "trace_as_metadata": true,
                 "track_in_telemetry": true,
                 "type": "str",
-                "value": "llama3.2:3b"
+                "value": "qwen2.5:7b-instruct"
               },
               "n_messages": {
                 "_input_type": "IntInput",
