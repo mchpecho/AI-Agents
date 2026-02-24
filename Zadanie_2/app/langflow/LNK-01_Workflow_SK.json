@@ -7,7 +7,7 @@
         "data": {
           "sourceHandle": {
             "dataType": "SQLComponent",
-            "id": "SQLComponent-vckzc",
+            "id": "SQLComponent-aaFt8",
             "name": "component_as_tool",
             "output_types": [
               "Tool"
@@ -15,47 +15,19 @@
           },
           "targetHandle": {
             "fieldName": "tools",
-            "id": "Agent-Q4mBQ",
+            "id": "Agent-1Xz3P",
             "inputTypes": [
               "Tool"
             ],
             "type": "other"
           }
         },
-        "id": "xy-edge__SQLComponent-vckzc-tool-Agent-Q4mBQ-tools",
+        "id": "reactflow__edge-SQLComponent-aaFt8{œdataTypeœ:œSQLComponentœ,œidœ:œSQLComponent-aaFt8œ,œnameœ:œcomponent_as_toolœ,œoutput_typesœ:[œToolœ]}-Agent-1Xz3P{œfieldNameœ:œtoolsœ,œidœ:œAgent-1Xz3Pœ,œinputTypesœ:[œToolœ],œtypeœ:œotherœ}",
         "selected": false,
-        "source": "SQLComponent-vckzc",
-        "sourceHandle": "{\"dataType\":\"SQLComponent\",\"id\":\"SQLComponent-vckzc\",\"name\":\"component_as_tool\",\"output_types\":[\"Tool\"]}",
-        "target": "Agent-Q4mBQ",
-        "targetHandle": "{\"fieldName\":\"tools\",\"id\":\"Agent-Q4mBQ\",\"inputTypes\":[\"Tool\"],\"type\":\"other\"}"
-      },
-      {
-        "animated": false,
-        "className": "",
-        "data": {
-          "sourceHandle": {
-            "dataType": "Chroma",
-            "id": "Chroma-q8upq",
-            "name": "search_results",
-            "output_types": [
-              "Tool"
-            ]
-          },
-          "targetHandle": {
-            "fieldName": "tools",
-            "id": "Agent-Q4mBQ",
-            "inputTypes": [
-              "Tool"
-            ],
-            "type": "other"
-          }
-        },
-        "id": "xy-edge__Chroma-q8upq-tool-Agent-Q4mBQ-tools",
-        "selected": false,
-        "source": "Chroma-q8upq",
-        "sourceHandle": "{\"dataType\":\"Chroma\",\"id\":\"Chroma-q8upq\",\"name\":\"search_results\",\"output_types\":[\"Tool\"]}",
-        "target": "Agent-Q4mBQ",
-        "targetHandle": "{\"fieldName\":\"tools\",\"id\":\"Agent-Q4mBQ\",\"inputTypes\":[\"Tool\"],\"type\":\"other\"}"
+        "source": "SQLComponent-aaFt8",
+        "sourceHandle": "{œdataTypeœ:œSQLComponentœ,œidœ:œSQLComponent-aaFt8œ,œnameœ:œcomponent_as_toolœ,œoutput_typesœ:[œToolœ]}",
+        "target": "Agent-1Xz3P",
+        "targetHandle": "{œfieldNameœ:œtoolsœ,œidœ:œAgent-1Xz3Pœ,œinputTypesœ:[œToolœ],œtypeœ:œotherœ}"
       },
       {
         "animated": false,
@@ -63,7 +35,7 @@
         "data": {
           "sourceHandle": {
             "dataType": "OllamaEmbeddings",
-            "id": "OllamaEmbeddings-1bY2r",
+            "id": "OllamaEmbeddings-2QQvp",
             "name": "embeddings",
             "output_types": [
               "Embeddings"
@@ -71,19 +43,19 @@
           },
           "targetHandle": {
             "fieldName": "embedding",
-            "id": "Chroma-q8upq",
+            "id": "Chroma-R594Q",
             "inputTypes": [
               "Embeddings"
             ],
             "type": "other"
           }
         },
-        "id": "xy-edge__OllamaEmbeddings-1bY2r-embeddings-Chroma-q8upq-embedding",
+        "id": "reactflow__edge-OllamaEmbeddings-2QQvp{œdataTypeœ:œOllamaEmbeddingsœ,œidœ:œOllamaEmbeddings-2QQvpœ,œnameœ:œembeddingsœ,œoutput_typesœ:[œEmbeddingsœ]}-Chroma-R594Q{œfieldNameœ:œembeddingœ,œidœ:œChroma-R594Qœ,œinputTypesœ:[œEmbeddingsœ],œtypeœ:œotherœ}",
         "selected": false,
-        "source": "OllamaEmbeddings-1bY2r",
-        "sourceHandle": "{\"dataType\":\"OllamaEmbeddings\",\"id\":\"OllamaEmbeddings-1bY2r\",\"name\":\"embeddings\",\"output_types\":[\"Embeddings\"]}",
-        "target": "Chroma-q8upq",
-        "targetHandle": "{\"fieldName\":\"embedding\",\"id\":\"Chroma-q8upq\",\"inputTypes\":[\"Embeddings\"],\"type\":\"other\"}"
+        "source": "OllamaEmbeddings-2QQvp",
+        "sourceHandle": "{œdataTypeœ:œOllamaEmbeddingsœ,œidœ:œOllamaEmbeddings-2QQvpœ,œnameœ:œembeddingsœ,œoutput_typesœ:[œEmbeddingsœ]}",
+        "target": "Chroma-R594Q",
+        "targetHandle": "{œfieldNameœ:œembeddingœ,œidœ:œChroma-R594Qœ,œinputTypesœ:[œEmbeddingsœ],œtypeœ:œotherœ}"
       },
       {
         "animated": false,
@@ -91,7 +63,7 @@
         "data": {
           "sourceHandle": {
             "dataType": "ChatInput",
-            "id": "ChatInput-SaqxB",
+            "id": "ChatInput-9pkZX",
             "name": "message",
             "output_types": [
               "Message"
@@ -99,19 +71,19 @@
           },
           "targetHandle": {
             "fieldName": "input_value",
-            "id": "Agent-Q4mBQ",
+            "id": "Agent-1Xz3P",
             "inputTypes": [
               "Message"
             ],
             "type": "str"
           }
         },
-        "id": "xy-edge__ChatInput-SaqxB-message-Agent-Q4mBQ-input",
+        "id": "reactflow__edge-ChatInput-9pkZX{œdataTypeœ:œChatInputœ,œidœ:œChatInput-9pkZXœ,œnameœ:œmessageœ,œoutput_typesœ:[œMessageœ]}-Agent-1Xz3P{œfieldNameœ:œinput_valueœ,œidœ:œAgent-1Xz3Pœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
         "selected": false,
-        "source": "ChatInput-SaqxB",
-        "sourceHandle": "{\"dataType\":\"ChatInput\",\"id\":\"ChatInput-SaqxB\",\"name\":\"message\",\"output_types\":[\"Message\"]}",
-        "target": "Agent-Q4mBQ",
-        "targetHandle": "{\"fieldName\":\"input_value\",\"id\":\"Agent-Q4mBQ\",\"inputTypes\":[\"Message\"],\"type\":\"str\"}"
+        "source": "ChatInput-9pkZX",
+        "sourceHandle": "{œdataTypeœ:œChatInputœ,œidœ:œChatInput-9pkZXœ,œnameœ:œmessageœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "Agent-1Xz3P",
+        "targetHandle": "{œfieldNameœ:œinput_valueœ,œidœ:œAgent-1Xz3Pœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
       },
       {
         "animated": false,
@@ -119,7 +91,7 @@
         "data": {
           "sourceHandle": {
             "dataType": "Agent",
-            "id": "Agent-Q4mBQ",
+            "id": "Agent-1Xz3P",
             "name": "response",
             "output_types": [
               "Message"
@@ -127,7 +99,7 @@
           },
           "targetHandle": {
             "fieldName": "input_value",
-            "id": "ChatOutput-gRZ6z",
+            "id": "ChatOutput-jP1Pz",
             "inputTypes": [
               "Data",
               "DataFrame",
@@ -136,18 +108,46 @@
             "type": "other"
           }
         },
-        "id": "xy-edge__Agent-Q4mBQ-response-ChatOutput-gRZ6z-input",
+        "id": "reactflow__edge-Agent-1Xz3P{œdataTypeœ:œAgentœ,œidœ:œAgent-1Xz3Pœ,œnameœ:œresponseœ,œoutput_typesœ:[œMessageœ]}-ChatOutput-jP1Pz{œfieldNameœ:œinput_valueœ,œidœ:œChatOutput-jP1Pzœ,œinputTypesœ:[œDataœ,œDataFrameœ,œMessageœ],œtypeœ:œotherœ}",
         "selected": false,
-        "source": "Agent-Q4mBQ",
-        "sourceHandle": "{\"dataType\":\"Agent\",\"id\":\"Agent-Q4mBQ\",\"name\":\"response\",\"output_types\":[\"Message\"]}",
-        "target": "ChatOutput-gRZ6z",
-        "targetHandle": "{\"fieldName\":\"input_value\",\"id\":\"ChatOutput-gRZ6z\",\"inputTypes\":[\"Data\",\"DataFrame\",\"Message\"],\"type\":\"other\"}"
+        "source": "Agent-1Xz3P",
+        "sourceHandle": "{œdataTypeœ:œAgentœ,œidœ:œAgent-1Xz3Pœ,œnameœ:œresponseœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "ChatOutput-jP1Pz",
+        "targetHandle": "{œfieldNameœ:œinput_valueœ,œidœ:œChatOutput-jP1Pzœ,œinputTypesœ:[œDataœ,œDataFrameœ,œMessageœ],œtypeœ:œotherœ}"
+      },
+      {
+        "animated": false,
+        "className": "",
+        "data": {
+          "sourceHandle": {
+            "dataType": "Chroma",
+            "id": "Chroma-R594Q",
+            "name": "component_as_tool",
+            "output_types": [
+              "Tool"
+            ]
+          },
+          "targetHandle": {
+            "fieldName": "tools",
+            "id": "Agent-1Xz3P",
+            "inputTypes": [
+              "Tool"
+            ],
+            "type": "other"
+          }
+        },
+        "id": "xy-edge__Chroma-R594Q{œdataTypeœ:œChromaœ,œidœ:œChroma-R594Qœ,œnameœ:œcomponent_as_toolœ,œoutput_typesœ:[œToolœ]}-Agent-1Xz3P{œfieldNameœ:œtoolsœ,œidœ:œAgent-1Xz3Pœ,œinputTypesœ:[œToolœ],œtypeœ:œotherœ}",
+        "selected": false,
+        "source": "Chroma-R594Q",
+        "sourceHandle": "{œdataTypeœ:œChromaœ,œidœ:œChroma-R594Qœ,œnameœ:œcomponent_as_toolœ,œoutput_typesœ:[œToolœ]}",
+        "target": "Agent-1Xz3P",
+        "targetHandle": "{œfieldNameœ:œtoolsœ,œidœ:œAgent-1Xz3Pœ,œinputTypesœ:[œToolœ],œtypeœ:œotherœ}"
       }
     ],
     "nodes": [
       {
         "data": {
-          "id": "ChatOutput-gRZ6z",
+          "id": "ChatOutput-jP1Pz",
           "node": {
             "base_classes": [
               "Message"
@@ -431,7 +431,7 @@
           "type": "ChatOutput"
         },
         "dragging": false,
-        "id": "ChatOutput-gRZ6z",
+        "id": "ChatOutput-jP1Pz",
         "measured": {
           "height": 48,
           "width": 192
@@ -445,7 +445,7 @@
       },
       {
         "data": {
-          "id": "ChatInput-SaqxB",
+          "id": "ChatInput-9pkZX",
           "node": {
             "base_classes": [
               "Message"
@@ -724,7 +724,7 @@
           "type": "ChatInput"
         },
         "dragging": false,
-        "id": "ChatInput-SaqxB",
+        "id": "ChatInput-9pkZX",
         "measured": {
           "height": 48,
           "width": 192
@@ -738,7 +738,7 @@
       },
       {
         "data": {
-          "id": "SQLComponent-vckzc",
+          "id": "SQLComponent-aaFt8",
           "node": {
             "base_classes": [
               "DataFrame"
@@ -758,7 +758,7 @@
             ],
             "frozen": false,
             "icon": "database",
-            "last_updated": "2026-02-24T07:00:38.331Z",
+            "last_updated": "2026-02-24T10:35:40.831Z",
             "legacy": false,
             "lf_version": "1.7.3",
             "metadata": {
@@ -814,10 +814,10 @@
             "pinned": false,
             "template": {
               "_frontend_node_flow_id": {
-                "value": "6173b261-ed66-40e0-ae82-60af31f5fd51"
+                "value": "6956bcc2-46f3-47fe-afa4-d5463ad45233"
               },
               "_frontend_node_folder_id": {
-                "value": "96d6969c-db27-45f8-8eb8-d67b05ef652c"
+                "value": "88ff158d-72ad-4703-9eca-cc7f2e046552"
               },
               "_type": "Component",
               "add_error": {
@@ -856,7 +856,7 @@
                 "show": true,
                 "title_case": false,
                 "type": "code",
-                "value": "from typing import TYPE_CHECKING, Any\n\nfrom langchain_community.utilities import SQLDatabase\nfrom sqlalchemy.exc import SQLAlchemyError\n\nfrom lfx.custom.custom_component.component_with_cache import ComponentWithCache\nfrom lfx.io import BoolInput, MessageTextInput, MultilineInput, Output\nfrom lfx.schema.dataframe import DataFrame\nfrom lfx.schema.message import Message\nfrom lfx.services.cache.utils import CacheMiss\n\nif TYPE_CHECKING:\n    from sqlalchemy.engine import Result\n\n\nclass SQLComponent(ComponentWithCache):\n    \"\"\"A sql component.\"\"\"\n\n    display_name = \"SQL Database\"\n    description = \"Executes SQL queries on SQLAlchemy-compatible databases.\"\n    documentation: str = \"https://docs.langflow.org/sql-database\"\n    icon = \"database\"\n    name = \"SQLComponent\"\n    metadata = {\"keywords\": [\"sql\", \"database\", \"query\", \"db\", \"fetch\"]}\n\n    def __init__(self, **kwargs) -> None:\n        super().__init__(**kwargs)\n        self.db: SQLDatabase = None\n\n    def maybe_create_db(self):\n        if self.database_url != \"\":\n            if self._shared_component_cache:\n                cached_db = self._shared_component_cache.get(self.database_url)\n                if not isinstance(cached_db, CacheMiss):\n                    self.db = cached_db\n                    return\n                self.log(\"Connecting to database\")\n            try:\n                self.db = SQLDatabase.from_uri(self.database_url)\n            except Exception as e:\n                msg = f\"An error occurred while connecting to the database: {e}\"\n                raise ValueError(msg) from e\n            if self._shared_component_cache:\n                self._shared_component_cache.set(self.database_url, self.db)\n\n    inputs = [\n        MessageTextInput(name=\"database_url\", display_name=\"Database URL\", required=True),\n        MultilineInput(name=\"query\", display_name=\"SQL Query\", tool_mode=True, required=False),\n        BoolInput(name=\"include_columns\", display_name=\"Include Columns\", value=True, tool_mode=True, advanced=True),\n        BoolInput(\n            name=\"add_error\",\n            display_name=\"Add Error\",\n            value=False,\n            tool_mode=True,\n            info=\"If True, the error will be added to the result\",\n            advanced=True,\n        ),\n    ]\n\n    outputs = [\n        Output(display_name=\"Result Table\", name=\"run_sql_query\", method=\"run_sql_query\"),\n    ]\n\n    def build_component(\n        self,\n    ) -> Message:\n        error = None\n        self.maybe_create_db()\n        try:\n            result = self.db.run(self.query, include_columns=self.include_columns)\n            self.status = result\n        except SQLAlchemyError as e:\n            msg = f\"An error occurred while running the SQL Query: {e}\"\n            self.log(msg)\n            result = str(e)\n            self.status = result\n            error = repr(e)\n\n        if self.add_error and error is not None:\n            result = f\"{result}\\n\\nError: {error}\\n\\nQuery: {self.query}\"\n        elif error is not None:\n            # Then we won't add the error to the result\n            result = self.query\n\n        return Message(text=result)\n\n    def __execute_query(self) -> list[dict[str, Any]]:\n        self.maybe_create_db()\n        try:\n            cursor: Result[Any] = self.db.run(self.query, fetch=\"cursor\")\n            return [x._asdict() for x in cursor.fetchall()]\n        except SQLAlchemyError as e:\n            msg = f\"An error occurred while running the SQL Query: {e}\"\n            self.log(msg)\n            raise ValueError(msg) from e\n\n    def run_sql_query(self) -> DataFrame:\n        result = self.__execute_query()\n        df_result = DataFrame(result)\n        self.status = df_result\n        return df_result\n"
+                "value": "from typing import TYPE_CHECKING, Any\n\nfrom langchain_community.utilities import SQLDatabase\nfrom sqlalchemy.exc import SQLAlchemyError\n\nfrom lfx.custom.custom_component.component_with_cache import ComponentWithCache\nfrom lfx.io import BoolInput, MessageTextInput, MultilineInput, Output\nfrom lfx.schema.dataframe import DataFrame\nfrom lfx.schema.message import Message\nfrom lfx.services.cache.utils import CacheMiss\n\nif TYPE_CHECKING:\n    from sqlalchemy.engine import Result\n\n\nclass SQLComponent(ComponentWithCache):\n    \"\"\"A sql component.\"\"\"\n\n    display_name = \"SQL Database\"\n    description = \"Executes SQL queries on SQLAlchemy-compatible databases.\"\n    documentation: str = \"https://docs.langflow.org/sql-database\"\n    icon = \"database\"\n    name = \"SQLComponent\"\n    metadata = {\"keywords\": [\"sql\", \"database\", \"query\", \"db\", \"fetch\"]}\n\n    def __init__(self, **kwargs) -> None:\n        super().__init__(**kwargs)\n        self.db: SQLDatabase = None\n\n    def maybe_create_db(self):\n        if self.database_url != \"\":\n            if self._shared_component_cache:\n                cached_db = self._shared_component_cache.get(self.database_url)\n                if not isinstance(cached_db, CacheMiss):\n                    self.db = cached_db\n                    return\n                self.log(\"Connecting to database\")\n            try:\n                self.db = SQLDatabase.from_uri(self.database_url)\n            except Exception as e:\n                msg = f\"An error occurred while connecting to the database: {e}\"\n                raise ValueError(msg) from e\n            if self._shared_component_cache:\n                self._shared_component_cache.set(self.database_url, self.db)\n\n    inputs = [\n        MessageTextInput(name=\"database_url\", display_name=\"Database URL\", required=True),\n        MultilineInput(name=\"query\", display_name=\"SQL Query\", tool_mode=True, required=True),\n        BoolInput(name=\"include_columns\", display_name=\"Include Columns\", value=True, tool_mode=True, advanced=True),\n        BoolInput(\n            name=\"add_error\",\n            display_name=\"Add Error\",\n            value=False,\n            tool_mode=True,\n            info=\"If True, the error will be added to the result\",\n            advanced=True,\n        ),\n    ]\n\n    outputs = [\n        Output(display_name=\"Result Table\", name=\"run_sql_query\", method=\"run_sql_query\"),\n    ]\n\n    def build_component(\n        self,\n    ) -> Message:\n        error = None\n        self.maybe_create_db()\n        try:\n            result = self.db.run(self.query, include_columns=self.include_columns)\n            self.status = result\n        except SQLAlchemyError as e:\n            msg = f\"An error occurred while running the SQL Query: {e}\"\n            self.log(msg)\n            result = str(e)\n            self.status = result\n            error = repr(e)\n\n        if self.add_error and error is not None:\n            result = f\"{result}\\n\\nError: {error}\\n\\nQuery: {self.query}\"\n        elif error is not None:\n            # Then we won't add the error to the result\n            result = self.query\n\n        return Message(text=result)\n\n    def __execute_query(self) -> list[dict[str, Any]]:\n        self.maybe_create_db()\n        try:\n            cursor: Result[Any] = self.db.run(self.query, fetch=\"cursor\")\n            return [x._asdict() for x in cursor.fetchall()]\n        except SQLAlchemyError as e:\n            msg = f\"An error occurred while running the SQL Query: {e}\"\n            self.log(msg)\n            raise ValueError(msg) from e\n\n    def run_sql_query(self) -> DataFrame:\n        result = self.__execute_query()\n        df_result = DataFrame(result)\n        self.status = df_result\n        return df_result\n"
               },
               "database_url": {
                 "_input_type": "MessageTextInput",
@@ -922,7 +922,7 @@
                 "name": "query",
                 "override_skip": false,
                 "placeholder": "",
-                "required": false,
+                "required": true,
                 "show": true,
                 "title_case": false,
                 "tool_mode": true,
@@ -930,7 +930,7 @@
                 "trace_as_metadata": true,
                 "track_in_telemetry": false,
                 "type": "str",
-                "value": "SELECT tag, min(value) AS min_v, avg(value) AS avg_v, max(value) AS max_v, (array_agg(value ORDER BY ts DESC))[1] AS last_v, (array_agg(value ORDER BY ts ASC))[1] AS first_v, min(ts) AS ts_min, max(ts) AS ts_max FROM telemetry WHERE machine_id = 'LNK-01' AND ts >= (now() at time zone 'utc') - interval '2 hours' AND tag IN ('LineSpeed_mpm','Tension_N','TempGearbox_C','TempMotor_C','Vibration_mm_s') GROUP BY tag ORDER BY tag;"
+                "value": "SELECT ts, tag, value, unit FROM telemetry WHERE machine_id = 'LNK-01' AND ts >= (now() at time zone 'utc') - interval '2 hours' ORDER BY ts DESC LIMIT 2000;"
               },
               "tools_metadata": {
                 "_input_type": "ToolsInput",
@@ -968,7 +968,7 @@
                       },
                       "query": {
                         "default": "SELECT ts, alarm_code, severity, message, state FROM alarms WHERE machine_id = 'LNK-01' AND ts >= (now() at time zone 'utc') - interval '24 hours' ORDER BY ts DESC LIMIT 200;",
-                        "description": "Required SQL text. Pass ONLY as key query (without brackets). Use SELECT only.",
+                        "description": "Required SQL text. Always pass this field as key 'query'. Use SELECT only.",
                         "title": "Query",
                         "type": "string"
                       }
@@ -992,7 +992,7 @@
           "type": "SQLComponent"
         },
         "dragging": false,
-        "id": "SQLComponent-vckzc",
+        "id": "SQLComponent-aaFt8",
         "measured": {
           "height": 300,
           "width": 320
@@ -1006,7 +1006,7 @@
       },
       {
         "data": {
-          "id": "Agent-Q4mBQ",
+          "id": "Agent-1Xz3P",
           "node": {
             "base_classes": [
               "Message"
@@ -1048,7 +1048,7 @@
             ],
             "frozen": false,
             "icon": "bot",
-            "last_updated": "2026-02-24T07:00:38.332Z",
+            "last_updated": "2026-02-24T10:35:40.832Z",
             "legacy": false,
             "lf_version": "1.7.3",
             "metadata": {
@@ -1097,10 +1097,10 @@
             "pinned": false,
             "template": {
               "_frontend_node_flow_id": {
-                "value": "6173b261-ed66-40e0-ae82-60af31f5fd51"
+                "value": "6956bcc2-46f3-47fe-afa4-d5463ad45233"
               },
               "_frontend_node_folder_id": {
-                "value": "96d6969c-db27-45f8-8eb8-d67b05ef652c"
+                "value": "88ff158d-72ad-4703-9eca-cc7f2e046552"
               },
               "_type": "Component",
               "add_current_date_tool": {
@@ -1517,7 +1517,7 @@
                 "trace_as_metadata": true,
                 "track_in_telemetry": true,
                 "type": "int",
-                "value": 20
+                "value": 3
               },
               "metadata": {
                 "_input_type": "DictInput",
@@ -1640,7 +1640,7 @@
                 "trace_as_metadata": true,
                 "track_in_telemetry": true,
                 "type": "str",
-                "value": "qwen2.5:3b-instruct"
+                "value": "llama3.2:3b"
               },
               "n_messages": {
                 "_input_type": "IntInput",
@@ -1661,7 +1661,7 @@
                 "trace_as_metadata": true,
                 "track_in_telemetry": true,
                 "type": "int",
-                "value": 0
+                "value": 5
               },
               "num_ctx": {
                 "_input_type": "IntInput",
@@ -1909,7 +1909,7 @@
                 "trace_as_metadata": true,
                 "track_in_telemetry": false,
                 "type": "str",
-                "value": "You are a local maintenance assistant for machine LNK-01. Answer in English, concise and technical.\n\nHARD LANGUAGE RULE: always answer in English, regardless of the user's language. Before sending the final answer, verify the language and rewrite it in English if needed.\n\nYou have tools:\n1) SQL Database (tables: telemetry, alarms, machines) - for operational data\n2) Chroma DB (KB: alarm meaning, thresholds, SOP procedures) - for knowledge base\n\nTABLE SCHEMAS:\ntelemetry: (ts, machine_id, tag, value, unit) - signals NOT separate columns. Use tag IN (...) filter.\nalarms: (ts, machine_id, alarm_code, severity, message, state) - use alarm_code, NOT type.\nmachines: (machine_id, model)\n\nTIME AND TZ:\n- All timestamps are UTC. Use NOW() AT TIME ZONE 'UTC' for time windows.\n\nSQL TEMPLATES (copy and fill):\n1) Last alarm by code:\nSELECT ts, alarm_code, severity, message, state\nFROM alarms\nWHERE machine_id = 'LNK-01' AND alarm_code = 'E221'\nORDER BY ts DESC\nLIMIT 1;\n\n2) Alarms in last N hours:\nSELECT ts, alarm_code, severity, message, state\nFROM alarms\nWHERE machine_id = 'LNK-01'\n  AND alarm_code IN ('E204','E221')\n  AND ts >= (NOW() AT TIME ZONE 'UTC') - INTERVAL '24 hours'\nORDER BY ts DESC;\n\n3) Telemetry by tag and time window:\nSELECT ts, tag, value, unit\nFROM telemetry\nWHERE machine_id = 'LNK-01'\n  AND tag IN ('SpoolRPM','Tension_N')\n  AND ts BETWEEN (NOW() AT TIME ZONE 'UTC') - INTERVAL '12 hours' AND (NOW() AT TIME ZONE 'UTC')\nORDER BY ts ASC;\n\n4) Discover available tags:\nSELECT DISTINCT tag FROM telemetry WHERE machine_id = 'LNK-01' ORDER BY tag;\n\nTOOL ROUTING RULES:\n- For SOP, procedures, causes, or KB questions (e.g. \"SOP for E204\", \"explain E221\", \"why did E204 happen\") -> USE CHROMA TOOL\n- For finding event history, telemetry, counts -> USE SQL TOOL\n- For mixed queries -> SQL first to find data, then CHROMA to explain\n\nHARD RULES:\n- Never use type or any other wrong column names.\n- Do not use INTERVAL 1 DAY; use INTERVAL '1 day' or '24 hours'.\n- Do not use NOW() without UTC conversion.\n- For telemetry/alarm questions, run SQL first.\n- For causes/explanations/procedures, use Chroma tool after SQL.\n- Never invent dates, times, or numbers.\n- Never return raw JSON or tool calls.\n- If SQL result is empty, explicitly write 'No data found' and stop.\n- After you have the needed tool results, produce the final answer and stop.\n- Always filter machine_id = 'LNK-01'."
+                "value": "Si lokálny asistent pre údržbu stroja LNK-01. Odpovedaj po slovensky, vecne a technicky.\n\nMáš nástroje:\n1) SQL Database (tabuľky telemetry, alarms, machines)\n2) Chroma DB (KB: význam alarmov, prahy, SOP postupy)\n\nKRITICKÉ PRAVIDLÁ:\n- Nikdy nevymýšľaj čísla ani časové rady.\n- Pri otázkach na prevádzku/telemetriu/alarmy MUSÍŠ najprv zavolať SQL tool.\n- SQL používaj iba SELECT.\n- Vždy filtruj machine_id = 'LNK-01'.\n- Vždy filtruj čas (UTC) a použi LIMIT.\n- Pri volaní run_sql_query pošli parameter presne 'query'.\n- NIKDY nevracaj surové tool calls ani surový JSON dump z nástrojov.\n- Po použití nástrojov vždy urob finálnu odpoveď pre človeka.\n\nŠpeciálne pre otázku typu \"posledné 2 hodiny\":\n- Použi SQL nad telemetry s intervalom 2 hours.\n- Zhrň iba relevantné signály: LineSpeed_mpm, Tension_N, TempGearbox_C, TempMotor_C, Vibration_mm_s.\n- Uveď min/avg/max a krátky trend (rastie/klesá/stabilné).\n\nFormát finálnej odpovede:\n## Zhrnutie\n- 2–4 vety\n\n## Fakty z telemetrie (DB)\n- Časový rozsah (UTC): …\n- Rýchlosť (LineSpeed_mpm): min / avg / max + trend\n- Napätie (Tension_N): min / avg / max + trend\n- Teplota prevodovky (TempGearbox_C): min / avg / max + trend\n- Teplota motora (TempMotor_C): min / avg / max + trend\n- Vibrácie (Vibration_mm_s): min / avg / max + trend\n\n## Poznámka\n- Ak chýbajú dáta, napíš to explicitne a navrhni konkrétny SQL dotaz.\n"
               },
               "tags": {
                 "_input_type": "MessageTextInput",
@@ -1965,7 +1965,7 @@
                 "tool_mode": false,
                 "track_in_telemetry": false,
                 "type": "slider",
-                "value": 0.0
+                "value": 0.1
               },
               "template": {
                 "_input_type": "MessageTextInput",
@@ -2148,7 +2148,7 @@
           "type": "Agent"
         },
         "dragging": false,
-        "id": "Agent-Q4mBQ",
+        "id": "Agent-1Xz3P",
         "measured": {
           "height": 636,
           "width": 320
@@ -2162,7 +2162,7 @@
       },
       {
         "data": {
-          "id": "OllamaEmbeddings-1bY2r",
+          "id": "OllamaEmbeddings-2QQvp",
           "node": {
             "base_classes": [
               "Embeddings"
@@ -2180,17 +2180,35 @@
             ],
             "frozen": false,
             "icon": "Ollama",
-            "last_updated": "2026-02-24T07:00:38.334Z",
+            "last_updated": "2026-02-24T10:23:57.271Z",
             "legacy": false,
             "lf_version": "1.7.3",
             "metadata": {
+              "code_hash": "ea2827c2a89f",
+              "dependencies": {
+                "dependencies": [
+                  {
+                    "name": "httpx",
+                    "version": "0.28.1"
+                  },
+                  {
+                    "name": "langchain_ollama",
+                    "version": "0.3.10"
+                  },
+                  {
+                    "name": "lfx",
+                    "version": "0.2.2"
+                  }
+                ],
+                "total_dependencies": 3
+              },
               "keywords": [
                 "model",
                 "llm",
                 "language model",
                 "large language model"
               ],
-              "module": "lfx.components.ollama.ollama_embeddings.OllamaEmbeddingsComponent"
+              "module": "custom_components.ollama_embeddings"
             },
             "minimized": false,
             "output_types": [],
@@ -2217,10 +2235,10 @@
             "pinned": false,
             "template": {
               "_frontend_node_flow_id": {
-                "value": "6173b261-ed66-40e0-ae82-60af31f5fd51"
+                "value": "6956bcc2-46f3-47fe-afa4-d5463ad45233"
               },
               "_frontend_node_folder_id": {
-                "value": "96d6969c-db27-45f8-8eb8-d67b05ef652c"
+                "value": "88ff158d-72ad-4703-9eca-cc7f2e046552"
               },
               "_type": "Component",
               "base_url": {
@@ -2248,37 +2266,7 @@
                 "type": "str",
                 "value": "http://ollama:11434"
               },
-              "model_name": {
-                "_input_type": "DropdownInput",
-                "advanced": false,
-                "combobox": true,
-                "dialog_inputs": {},
-                "display_name": "Ollama Model",
-                "dynamic": false,
-                "external_options": {},
-                "info": "",
-                "input_types": [],
-                "name": "model_name",
-                "options": [
-                  "nomic-embed-text"
-                ],
-                "options_metadata": [],
-                "override_skip": false,
-                "placeholder": "",
-                "real_time_refresh": true,
-                "refresh_button": true,
-                "required": true,
-                "show": true,
-                "title_case": false,
-                "toggle": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "str",
-                "value": "nomic-embed-text"
-              },
               "code": {
-                "_input_type": "code",
                 "advanced": true,
                 "dynamic": true,
                 "fileTypes": [],
@@ -2294,7 +2282,37 @@
                 "show": true,
                 "title_case": false,
                 "type": "code",
-                "value": "from typing import Any\nfrom urllib.parse import urljoin\n\nimport httpx\nfrom langchain_ollama import OllamaEmbeddings\n\nfrom lfx.base.models.model import LCModelComponent\nfrom lfx.base.models.ollama_constants import OLLAMA_EMBEDDING_MODELS\nfrom lfx.field_typing import Embeddings\nfrom lfx.io import DropdownInput, MessageTextInput, Output\nfrom lfx.utils.util import transform_localhost_url\n\nHTTP_STATUS_OK = 200\n\n\nclass OllamaEmbeddingsComponent(LCModelComponent):\n    display_name: str = \"Ollama Embeddings\"\n    description: str = \"Generate embeddings using Ollama models.\"\n    documentation = \"https://python.langchain.com/docs/integrations/text_embedding/ollama\"\n    icon = \"Ollama\"\n    name = \"OllamaEmbeddings\"\n\n    inputs = [\n        DropdownInput(\n            name=\"model_name\",\n            display_name=\"Ollama Model\",\n            value=\"\",\n            options=[],\n            real_time_refresh=True,\n            refresh_button=True,\n            combobox=True,\n            required=True,\n        ),\n        MessageTextInput(\n            name=\"base_url\",\n            display_name=\"Ollama Base URL\",\n            info=\"Endpoint of the Ollama API. Defaults to http://localhost:11434.\",\n            value=\"http://localhost:11434\",\n            required=True,\n        ),\n    ]\n\n    outputs = [\n        Output(display_name=\"Embeddings\", name=\"embeddings\", method=\"build_embeddings\"),\n    ]\n\n    def build_embeddings(self) -> Embeddings:\n        transformed_base_url = transform_localhost_url(self.base_url)\n        try:\n            output = OllamaEmbeddings(model=self.model_name, base_url=transformed_base_url)\n        except Exception as e:\n            msg = (\n                \"Unable to connect to the Ollama API. \",\n                \"Please verify the base URL, ensure the relevant Ollama model is pulled, and try again.\",\n            )\n            raise ValueError(msg) from e\n        return output\n\n    async def update_build_config(self, build_config: dict, _field_value: Any, field_name: str | None = None):\n        if field_name in {\"base_url\", \"model_name\"} and not await self.is_valid_ollama_url(self.base_url):\n            msg = \"Ollama is not running on the provided base URL. Please start Ollama and try again.\"\n            raise ValueError(msg)\n        if field_name in {\"model_name\", \"base_url\", \"tool_model_enabled\"}:\n            if await self.is_valid_ollama_url(self.base_url):\n                build_config[\"model_name\"][\"options\"] = await self.get_model(self.base_url)\n            else:\n                build_config[\"model_name\"][\"options\"] = []\n\n        return build_config\n\n    async def get_model(self, base_url_value: str) -> list[str]:\n        \"\"\"Get the model names from Ollama.\"\"\"\n        model_ids = []\n        try:\n            base_url_value = transform_localhost_url(base_url_value)\n            url = urljoin(base_url_value, \"/api/tags\")\n            async with httpx.AsyncClient() as client:\n                response = await client.get(url)\n                response.raise_for_status()\n                data = response.json()\n\n                model_ids = [model[\"name\"] for model in data.get(\"models\", [])]\n            # this to ensure that not embedding models are included.\n            # not even the base models since models can have 1b 2b etc\n            # handles cases when embeddings models have tags like :latest - etc.\n            model_ids = [\n                model\n                for model in model_ids\n                if any(model.startswith(f\"{embedding_model}\") for embedding_model in OLLAMA_EMBEDDING_MODELS)\n            ]\n\n        except (ImportError, ValueError, httpx.RequestError) as e:\n            msg = \"Could not get model names from Ollama.\"\n            raise ValueError(msg) from e\n\n        return model_ids\n\n    async def is_valid_ollama_url(self, url: str) -> bool:\n        try:\n            async with httpx.AsyncClient() as client:\n                url = transform_localhost_url(url)\n                return (await client.get(f\"{url}/api/tags\")).status_code == HTTP_STATUS_OK\n        except httpx.RequestError:\n            return False\n"
+                "value": "from typing import Any\nfrom urllib.parse import urljoin\n\nimport httpx\nfrom langchain_ollama import OllamaEmbeddings\n\nfrom lfx.base.models.model import LCModelComponent\nfrom lfx.base.models.ollama_constants import OLLAMA_EMBEDDING_MODELS\nfrom lfx.field_typing import Embeddings\nfrom lfx.io import DropdownInput, MessageTextInput, Output\nfrom lfx.utils.util import transform_localhost_url\n\nHTTP_STATUS_OK = 200\n\n\nclass OllamaEmbeddingsComponent(LCModelComponent):\n    display_name: str = \"Ollama Embeddings\"\n    description: str = \"Generate embeddings using Ollama models.\"\n    documentation = \"https://python.langchain.com/docs/integrations/text_embedding/ollama\"\n    icon = \"Ollama\"\n    name = \"OllamaEmbeddings\"\n\n    inputs = [\n        DropdownInput(\n            name=\"model_name\",\n            display_name=\"Ollama Model\",\n            value=\"\",\n            options=[],\n            real_time_refresh=True,\n            refresh_button=True,\n            combobox=True,\n            required=True,\n        ),\n        MessageTextInput(\n            name=\"base_url\",\n            display_name=\"Ollama Base URL\",\n            info=\"Endpoint of the Ollama API. Defaults to http://localhost:11434.\",\n            value=\"http://localhost:11434\",\n            required=True,\n        ),\n    ]\n\n    outputs = [\n        Output(display_name=\"Embeddings\", name=\"embeddings\", method=\"build_embeddings\"),\n    ]\n\n    def build_embeddings(self) -> Embeddings:\n        transformed_base_url = transform_localhost_url(self.base_url)\n        try:\n            output = OllamaEmbeddings(model=self.model_name, base_url=transformed_base_url)\n        except Exception as e:\n            msg = (\n                \"Unable to connect to the Ollama API. \",\n                \"Please verify the base URL, ensure the relevant Ollama model is pulled, and try again.\",\n            )\n            raise ValueError(msg) from e\n        return output\n\n    async def update_build_config(self, build_config: dict, _field_value: Any, field_name: str | None = None):\n        if field_name in {\"base_url\", \"model_name\"} and not await self.is_valid_ollama_url(self.base_url):\n            msg = \"Ollama is not running on the provided base URL. Please start Ollama and try again.\"\n            raise ValueError(msg)\n        if field_name in {\"model_name\", \"base_url\", \"tool_model_enabled\"}:\n            if await self.is_valid_ollama_url(self.base_url):\n                build_config[\"model_name\"][\"options\"] = await self.get_model(self.base_url)\n            else:\n                build_config[\"model_name\"][\"options\"] = []\n\n        return build_config\n\n    async def get_model(self, base_url_value: str) -> list[str]:\n        \"\"\"Get the model names from Ollama.\"\"\"\n        model_ids = []\n        try:\n            base_url_value = transform_localhost_url(base_url_value)\n            url = urljoin(base_url_value, \"/api/tags\")\n            async with httpx.AsyncClient() as client:\n                response = await client.get(url)\n                response.raise_for_status()\n                data = response.json()\n\n            model_ids = [model[\"name\"] for model in data.get(\"models\", [])]\n            # this to ensure that not embedding models are included.\n            # not even the base models since models can have 1b 2b etc\n            # handles cases when embeddings models have tags like :latest - etc.\n            model_ids = [\n                model\n                for model in model_ids\n                if any(model.startswith(f\"{embedding_model}\") for embedding_model in OLLAMA_EMBEDDING_MODELS)\n            ]\n\n        except (ImportError, ValueError, httpx.RequestError) as e:\n            msg = \"Could not get model names from Ollama.\"\n            raise ValueError(msg) from e\n\n        return model_ids\n\n    async def is_valid_ollama_url(self, url: str) -> bool:\n        try:\n            async with httpx.AsyncClient() as client:\n                url = transform_localhost_url(url)\n                return (await client.get(f\"{url}/api/tags\")).status_code == HTTP_STATUS_OK\n        except httpx.RequestError:\n            return False\n"
+              },
+              "is_refresh": false,
+              "model_name": {
+                "_input_type": "DropdownInput",
+                "advanced": false,
+                "combobox": true,
+                "dialog_inputs": {},
+                "display_name": "Ollama Model",
+                "dynamic": false,
+                "external_options": {},
+                "info": "",
+                "load_from_db": false,
+                "name": "model_name",
+                "options": [
+                  "nomic-embed-text:latest"
+                ],
+                "options_metadata": [],
+                "override_skip": false,
+                "placeholder": "",
+                "real_time_refresh": true,
+                "refresh_button": true,
+                "required": true,
+                "show": true,
+                "title_case": false,
+                "toggle": false,
+                "tool_mode": false,
+                "trace_as_metadata": true,
+                "track_in_telemetry": true,
+                "type": "str",
+                "value": "nomic-embed-text:latest"
               }
             },
             "tool_mode": false
@@ -2303,21 +2321,21 @@
           "type": "OllamaEmbeddings"
         },
         "dragging": false,
-        "id": "OllamaEmbeddings-1bY2r",
+        "id": "OllamaEmbeddings-2QQvp",
         "measured": {
-          "height": 240,
+          "height": 286,
           "width": 320
         },
         "position": {
-          "x": -1350.0,
-          "y": 180.0
+          "x": -2598.298605070285,
+          "y": -406.25029365255307
         },
         "selected": false,
         "type": "genericNode"
       },
       {
         "data": {
-          "id": "Chroma-q8upq",
+          "id": "Chroma-R594Q",
           "node": {
             "base_classes": [
               "Data",
@@ -2349,7 +2367,7 @@
             ],
             "frozen": false,
             "icon": "Chroma",
-            "last_updated": "2026-02-24T07:00:38.334Z",
+            "last_updated": "2026-02-24T10:35:40.833Z",
             "legacy": false,
             "lf_version": "1.7.3",
             "metadata": {
@@ -2406,10 +2424,10 @@
             "pinned": false,
             "template": {
               "_frontend_node_flow_id": {
-                "value": "6173b261-ed66-40e0-ae82-60af31f5fd51"
+                "value": "6956bcc2-46f3-47fe-afa4-d5463ad45233"
               },
               "_frontend_node_folder_id": {
-                "value": "96d6969c-db27-45f8-8eb8-d67b05ef652c"
+                "value": "88ff158d-72ad-4703-9eca-cc7f2e046552"
               },
               "_type": "Component",
               "allow_duplicates": {
@@ -2822,7 +2840,7 @@
           "type": "Chroma"
         },
         "dragging": false,
-        "id": "Chroma-q8upq",
+        "id": "Chroma-R594Q",
         "measured": {
           "height": 411,
           "width": 320
@@ -2836,16 +2854,16 @@
       }
     ],
     "viewport": {
-      "x": 1124.6196990833873,
-      "y": 244.83717328737885,
-      "zoom": 0.4604554831886796
+      "x": 2376.9311582907303,
+      "y": 416.4490058696235,
+      "zoom": 0.8443492572361364
     }
   },
   "description": "LNK-01 local agent: SQL telemetry + Chroma KB + Ollama",
   "endpoint_name": null,
-  "id": "6173b261-ed66-40e0-ae82-60af31f5fd51",
+  "id": "6956bcc2-46f3-47fe-afa4-d5463ad45233",
   "is_component": false,
   "last_tested_version": "1.7.3",
-  "name": "LNK-01 SQL+RAG Agent (v1.7.3)",
+  "name": "LNK-01 SQL+RAG Agent (v1.7.3) (4)",
   "tags": []
 }
