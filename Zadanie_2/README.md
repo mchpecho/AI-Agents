@@ -127,3 +127,7 @@ docker compose down
 # wipe persisted data
 rm -rf .data
 ```
+
+## 10) Usage
+<img width="788" height="686" alt="image" src="https://github.com/user-attachments/assets/411414d1-a069-4e6f-add9-d68fa5a778e5" />
+
