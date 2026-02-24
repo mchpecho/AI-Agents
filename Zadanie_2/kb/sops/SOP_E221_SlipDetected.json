@@ -1,0 +1,24 @@
+{
+  "type": "sop",
+  "title": "SOP: E221 – Slip Detected",
+  "summary": "Procedure for slip detection – stabilize process and verify causes.",
+  "alarm_codes": [
+    "E221"
+  ],
+  "related_tags": [
+    "SlipDetected",
+    "LineSpeed_mpm",
+    "Tension_N",
+    "SpoolRPM",
+    "Vibration_mm_s"
+  ],
+  "steps": [
+    "Reduce line speed (LineSpeed_mpm) by 10–30% and monitor whether SlipDetected stops.",
+    "Check feed roller pressure: contamination, wear, oil, or dust.",
+    "Verify that Tension_N is within normal range (low tension promotes slip).",
+    "Check spool RPM synchronization (SpoolRPM) and winding smoothness.",
+    "If slip persists, stop and perform cleaning and adjustment.",
+    "After intervention, test at lower speed and gradually return to setpoint."
+  ],
+  "body": "Slip can cause inconsistent quality and increased risk of E204."
+}

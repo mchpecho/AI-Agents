@@ -1,0 +1,147 @@
+{
+  "type": "faq",
+  "title": "Mini Manual: Tags, Units, Thresholds and Alarms (MVP)",
+  "summary": "Quick overview of telemetry tags, units, typical thresholds, and meanings of alarms E204/E221/E301.",
+  "tags": [
+    {
+      "tag": "LineSpeed_mpm",
+      "unit": "mpm",
+      "desc": "Line speed in meters per minute.",
+      "typical_range": [
+        0,
+        160
+      ]
+    },
+    {
+      "tag": "Tension_N",
+      "unit": "N",
+      "desc": "Wire tension in newtons.",
+      "typical_range": [
+        80,
+        260
+      ]
+    },
+    {
+      "tag": "SpoolRPM",
+      "unit": "rpm",
+      "desc": "Spool revolutions per minute.",
+      "typical_range": [
+        0,
+        140
+      ]
+    },
+    {
+      "tag": "SpoolDiameter_mm",
+      "unit": "mm",
+      "desc": "Spool diameter (estimated).",
+      "typical_range": [
+        200,
+        280
+      ]
+    },
+    {
+      "tag": "MainMotorCurrent_A",
+      "unit": "A",
+      "desc": "Main motor current.",
+      "typical_range": [
+        10,
+        35
+      ]
+    },
+    {
+      "tag": "Vibration_mm_s",
+      "unit": "mm/s",
+      "desc": "RMS vibration – rough indicator of mechanical condition.",
+      "typical_range": [
+        0,
+        4
+      ]
+    },
+    {
+      "tag": "TempGearbox_C",
+      "unit": "C",
+      "desc": "Gearbox temperature.",
+      "typical_range": [
+        35,
+        75
+      ]
+    },
+    {
+      "tag": "TempMotor_C",
+      "unit": "C",
+      "desc": "Motor temperature.",
+      "typical_range": [
+        30,
+        80
+      ]
+    },
+    {
+      "tag": "MachineState",
+      "unit": "",
+      "desc": "0=STOP, 1=RUN, 3=ALARM.",
+      "typical_range": [
+        0,
+        3
+      ]
+    },
+    {
+      "tag": "WireBreak",
+      "unit": "",
+      "desc": "0/1 – indicator of wire break (synthetic).",
+      "typical_range": [
+        0,
+        1
+      ]
+    },
+    {
+      "tag": "SlipDetected",
+      "unit": "",
+      "desc": "0/1 – indicator of slip (synthetic).",
+      "typical_range": [
+        0,
+        1
+      ]
+    }
+  ],
+  "thresholds": {
+    "Vibration_mm_s_warn": 3.0,
+    "Vibration_mm_s_crit": 4.5,
+    "TempGearbox_C_warn": 78.0,
+    "TempGearbox_C_crit": 85.0,
+    "TempMotor_C_warn": 80.0
+  },
+  "alarm_codes": [
+    "E204",
+    "E221",
+    "E301"
+  ],
+  "alarms": [
+    {
+      "code": "E204",
+      "severity": "CRIT",
+      "meaning": "Wire break detected. Machine typically reduces speed and transitions to ALARM state."
+    },
+    {
+      "code": "E221",
+      "severity": "WARN",
+      "meaning": "Slip detected. May be related to pressure settings, wear, or contamination."
+    },
+    {
+      "code": "E301",
+      "severity": "CRIT",
+      "meaning": "Gearbox – excessive temperature. Risk of lubrication/bearing damage if prolonged."
+    }
+  ],
+  "related_tags": [
+    "LineSpeed_mpm",
+    "Tension_N",
+    "SpoolRPM",
+    "MainMotorCurrent_A",
+    "Vibration_mm_s",
+    "TempGearbox_C",
+    "MachineState",
+    "WireBreak",
+    "SlipDetected"
+  ],
+  "body": "Note: This is a synthetic, general knowledge base for demo purposes. Thresholds are approximate and not binding manufacturer specifications."
+}

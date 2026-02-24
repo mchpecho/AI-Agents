@@ -1,0 +1,7 @@
+ts,machine_id,alarm_code,severity,message,state
+2026-02-24T04:26:47+00:00,LNK-01,E204,CRIT,Wire break detected on line section A.,ACTIVE
+2026-02-24T04:31:47+00:00,LNK-01,E204,CRIT,Wire break detected on line section A.,CLEARED
+2026-02-24T07:26:47+00:00,LNK-01,E221,WARN,Slip detected on spool drive.,ACTIVE
+2026-02-24T07:33:47+00:00,LNK-01,E221,WARN,Slip detected on spool drive.,CLEARED
+2026-02-24T08:56:47+00:00,LNK-01,E301,CRIT,Gearbox temperature above threshold.,ACTIVE
+2026-02-24T09:00:47+00:00,LNK-01,E301,CRIT,Gearbox temperature above threshold.,CLEARED

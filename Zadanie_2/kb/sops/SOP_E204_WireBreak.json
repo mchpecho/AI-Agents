@@ -1,0 +1,25 @@
+{
+  "type": "sop",
+  "title": "SOP: E204 – Wire Break",
+  "summary": "Safe procedure to restore production after wire break.",
+  "alarm_codes": [
+    "E204"
+  ],
+  "related_tags": [
+    "WireBreak",
+    "MachineState",
+    "LineSpeed_mpm",
+    "Tension_N",
+    "SpoolRPM"
+  ],
+  "steps": [
+    "Secure the machine: confirm STOP and wait for all drives to come to a complete halt.",
+    "Visually inspect the wire path and break location (guides, pulleys, winding).",
+    "Remove wire residue from hazardous areas (guides, rollers, spool).",
+    "Check tension setting (Tension_N) and look for mechanical damage.",
+    "Re-thread the wire according to standard path; verify attachment to the spool.",
+    "Start slowly (low LineSpeed_mpm) and monitor Tension_N + SpoolRPM for 1–2 minutes.",
+    "If E204 recurs, reduce speed and escalate to maintenance (possible damage to guides/pulleys)."
+  ],
+  "body": "The goal is to minimize repeated wire breaks and safely restore operation."
+}
