@@ -1,0 +1,14 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+
+# Persisted volumes
+.data/
+
+# Local exports / caches
+_local_demo_generator/*.csv
+_local_demo_generator/*.log
+
+# Local sanity/smoke checks
+_sql_test.py
