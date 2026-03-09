@@ -41,17 +41,6 @@ def _should_bootstrap() -> bool:
     )
 
 
-def _ensure_z2_env_file(z2_dir: Path) -> None:
-    env_file = z2_dir / ".env"
-    example_file = z2_dir / ".env.example"
-
-    if env_file.exists() or not example_file.exists():
-        return
-
-    env_file.write_text(example_file.read_text(encoding="utf-8"), encoding="utf-8")
-    logger.info("[BOOTSTRAP] Created Zadanie_2/.env from .env.example")
-
-
 def ensure_zadanie2_stack() -> None:
     """Auto-start local Zadanie_2 Docker dependencies used by Zadanie_3."""
     if not _should_bootstrap():
@@ -77,8 +66,6 @@ def ensure_zadanie2_stack() -> None:
     if not compose_file.exists():
         logger.warning("[BOOTSTRAP] Missing compose file: %s", compose_file)
         return
-
-    _ensure_z2_env_file(z2_dir)
 
     logger.info("[BOOTSTRAP] Starting Zadanie_2 dependencies via Docker Compose")
     cmd = [

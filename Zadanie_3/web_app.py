@@ -80,10 +80,20 @@ async def health_check():
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(req: ChatRequest):
-    app_graph = get_app_graph()
-    state = app_graph.invoke({"user_query": req.message})
-    answer = state.get("final_answer", "(no answer)")
-    return ChatResponse(answer=answer)
+    try:
+        app_graph = get_app_graph()
+        state = app_graph.invoke({"user_query": req.message})
+        answer = state.get("final_answer", "(no answer)")
+        return ChatResponse(answer=answer)
+    except Exception as exc:
+        logger.exception("Chat request failed")
+        # Return a user-facing diagnostic instead of opaque HTTP 500.
+        return ChatResponse(
+            answer=(
+                "The assistant is temporarily unavailable due to backend connectivity/configuration. "
+                f"Details: {exc}"
+            )
+        )
 
 
 if __name__ == "__main__":

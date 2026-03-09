@@ -133,20 +133,21 @@ You can open `http://localhost:8001/static/index.html` in your browser and chat 
 
 ## Docker Deployment (integrated with Zadanie 2 stack)
 
-The recommended way to run this agent in the course stack is via **Docker Compose** from `Zadanie_2`:
+The recommended way to run this agent in the course stack is via the `Zadanie_2` Compose file, but using env values from **`Zadanie_3/.env`** (not `Zadanie_2/.env`):
 
-1. In `Zadanie_2/.env` ensure you have:
-   - DB/LLM/Chroma variables (already present from Zadanie 2)
+1. Prepare `Zadanie_3/.env` (copy from `.env.example`) and set at least:
    - `TAVILY_API_KEY=...`
    - optional tuning:
      - `SQL_BACKEND_MODE=auto`
      - `SQL_RUNTIME_FALLBACK=true`
-     - `WEB_BACKEND_MODE=auto`
+     - `WEB_BACKEND_MODE=native` (or `auto`)
      - `WEB_RUNTIME_FALLBACK=true`
      - `WEB_SEARCH_MAX_RESULTS=5`
-2. From `Zadanie_2` run:
+    - note: when running in Docker via `Zadanie_2/docker-compose.yml`, container-internal hosts are used automatically (`postgres`, `chromadb`, `ollama`).
+       If needed, override with `AGENT_POSTGRES_HOST`, `AGENT_CHROMA_HOST`, `AGENT_OLLAMA_BASE_URL`.
+2. From repository root run:
    ```bash
-   docker compose up -d --build
+   docker compose --env-file Zadanie_3/.env -f Zadanie_2/docker-compose.yml up -d --build plan_execute_agent
    ```
 3. After all services are healthy you should see:
    - `lf_postgres` (PostgreSQL)
