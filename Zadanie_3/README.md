@@ -46,7 +46,7 @@ LangFlow remains available as a reference/demo UI, but for this task the main en
 
 ### 1. Clone repository and move to project root
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/mchpecho/AI-Agents.git
 cd <your-repo-folder>
 ```
 
