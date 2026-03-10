@@ -202,7 +202,7 @@ Optional LangSmith tracing:
 4. `Was alarm E204 associated with a change in spindle speed? If yes, when was it last observed?`
 5. `Remember that I prefer concise answers.`
 6. `What did I tell you about my preferences?`
- 7. `Find technical information about Siemens component 6SL3210 and summarize compatibility.`
+7. `Find technical information about Siemens SIMATIC MICROBOX PC and summarize compatibility.`
 
 Expected behavior:
 - telemetry/alarm questions use SQL
@@ -218,4 +218,9 @@ Expected behavior:
 - LLM answers are grounded in tool outputs
 - MCP: optional Postgres MCP + Tavily MCP with switchable modes and fallback
 - Submission: source code is ready; final delivery should include GitHub repository link
+
+## Usage
+<img width="900" height="468" alt="Screenshot 2026-03-09 123041" src="https://github.com/user-attachments/assets/284e2305-d677-40bf-835c-6331702a9cb7" />
+<img width="907" height="614" alt="Screenshot 2026-03-09 124109" src="https://github.com/user-attachments/assets/a0c532bc-fd4e-4eba-9b19-1dbba6771fd4" />
+<img width="1919" height="917" alt="Screenshot 2026-03-09 171223" src="https://github.com/user-attachments/assets/2e801bf6-8a90-4f77-ac81-edf25425524b" />
 
